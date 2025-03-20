@@ -8,22 +8,23 @@ const gridSize = 50;
 const rows = 10;
 const cols = 10;
 
-let player = { x: 1, y: 4, targetX: 0, targetY: 0 };
+let player = { x: 1, y: 4, direction: "up" };
 let treasure = { x: 8, y: 6 };
 
-// Zeichne Spielfeld
 function drawGrid() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Zeichne das Spielfeld
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
       ctx.strokeRect(x * gridSize, y * gridSize, gridSize, gridSize);
     }
   }
-  // Spieler zeichnen
-  ctx.fillStyle = "blue";
-  ctx.fillRect(player.x * gridSize, player.y * gridSize, gridSize, gridSize);
 
-  // Schatz zeichnen
+  // Zeichne den Spieler
+  drawPlayer();
+
+  // Zeichne den Schatz
   ctx.fillStyle = "gold";
   ctx.fillRect(
     treasure.x * gridSize,
@@ -33,24 +34,89 @@ function drawGrid() {
   );
 }
 
-// Spieler bewegen
-function move(direction) {
-  switch (direction) {
+function drawPlayer() {
+  ctx.save(); // Speichert den aktuellen Zustand des Canvas
+
+  // Setze die Position und drehe das Canvas entsprechend der Blickrichtung des Spielers
+  ctx.translate(
+    player.x * gridSize + gridSize / 2,
+    player.y * gridSize + gridSize / 2
+  );
+
+  switch (player.direction) {
     case "up":
-      if (player.y > 0) player.y--;
-      break;
-    case "down":
-      if (player.y < rows - 1) player.y++;
-      break;
-    case "left":
-      if (player.x > 0) player.x--;
+      ctx.rotate(0); // Blickrichtung nach oben
       break;
     case "right":
-      if (player.x < cols - 1) player.x++;
+      ctx.rotate(Math.PI / 2); // Blickrichtung nach rechts
+      break;
+    case "down":
+      ctx.rotate(Math.PI); // Blickrichtung nach unten
+      break;
+    case "left":
+      ctx.rotate(-Math.PI / 2); // Blickrichtung nach links
       break;
   }
+
+  // Zeichne den Spieler als Pfeil
+  ctx.fillStyle = "blue";
+  ctx.beginPath();
+  ctx.moveTo(0, -gridSize / 2); // Spitze des Pfeils
+  ctx.lineTo(-gridSize / 4, gridSize / 4); // Linker Teil des Pfeils
+  ctx.lineTo(gridSize / 4, gridSize / 4); // Rechter Teil des Pfeils
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.restore(); // Wiederherstellen des ursprünglichen Canvas-Zustands
+}
+
+function move(direction) {
+  switch (player.direction) {
+    case "up":
+      if (direction === "up" && player.y > 0) player.y--;
+      if (direction === "down" && player.y < rows - 1) player.y++;
+      if (direction === "left" && player.x > 0) player.x--;
+      if (direction === "right" && player.x < cols - 1) player.x++;
+      break;
+
+    case "right":
+      if (direction === "up" && player.x < cols - 1) player.x++;
+      if (direction === "down" && player.x > 0) player.x--;
+      if (direction === "left" && player.y < rows - 1) player.y++;
+      if (direction === "right" && player.y > 0) player.y--;
+      break;
+
+    case "down":
+      if (direction === "up" && player.y < rows - 1) player.y++;
+      if (direction === "down" && player.y > 0) player.y--;
+      if (direction === "left" && player.x < cols - 1) player.x++;
+      if (direction === "right" && player.x > 0) player.x--;
+      break;
+
+    case "left":
+      if (direction === "up" && player.x > 0) player.x--;
+      if (direction === "down" && player.x < cols - 1) player.x++;
+      if (direction === "left" && player.y > 0) player.y--;
+      if (direction === "right" && player.y < rows - 1) player.y++;
+      break;
+  }
+
   drawGrid();
   checkTreasure();
+}
+
+function turnLeft() {
+  const directions = ["up", "right", "down", "left"];
+  const currentIndex = directions.indexOf(player.direction);
+  player.direction = directions[(currentIndex + 3) % 4];
+  drawGrid();
+}
+
+function turnRight() {
+  const directions = ["up", "right", "down", "left"];
+  const currentIndex = directions.indexOf(player.direction);
+  player.direction = directions[(currentIndex + 1) % 4];
+  drawGrid();
 }
 
 // Überprüfen, ob der Schatz gefunden wurde
