@@ -1,5 +1,5 @@
 import * as monaco from "monaco-editor";
-import { parsedCode } from "./codePaser.js";
+import { transformUserCode } from "./codePaser.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -106,12 +106,15 @@ const editor = monaco.editor.create(document.getElementById("editor"), {
   quickSuggestions: { other: true, strings: true, comments: true },
 });
 
+// Globale Verzögerungsfunktion
+window.delay = (ms = 500) => new Promise((resolve) => setTimeout(resolve, ms));
+
 runButton.addEventListener("click", async () => {
-  const code = editor.getValue();
-  const evalCode = parsedCode(code);
+  const userCode = editor.getValue(); // User-Code holen
+  const transformedCode = transformUserCode(userCode); // Code transformieren
 
   try {
-    eval(evalCode);
+    await eval(transformedCode); // Asynchronen Code ausführen
   } catch (e) {
     alert("Fehler im Code: " + e.message);
   }

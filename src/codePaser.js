@@ -1,100 +1,87 @@
 import * as acorn from "acorn";
-import * as walk from "acorn-walk";
+import * as astring from "astring";
 
-let commandQueue = [];
-let isExecuting = false;
-
-function processQueue() {
-  if (commandQueue.length === 0) {
-    isExecuting = false;
-    return;
-  }
-
-  isExecuting = true;
-  const command = commandQueue.shift(); // Nimm den ersten Befehl aus der Warteschlange
-
-  // Führe den Befehl aus und warte 500ms, bevor der nächste ausgeführt wird
-  setTimeout(() => {
-    command(); // Führe den aktuellen Befehl aus
-    processQueue(); // Verarbeite den nächsten Befehl
-  }, 500);
+// Verzögerungsfunktion
+function delay(ms = 500) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function queueCommand(command) {
-  commandQueue.push(command); // Füge den Befehl zur Warteschlange hinzu
-  if (!isExecuting) {
-    processQueue(); // Starte die Verarbeitung, wenn sie nicht läuft
-  }
-}
-
-// Mach queueCommand global verfügbar
-window.queueCommand = queueCommand;
-
-export function parsedCode(code) {
+// AST transformieren: Pausen für alle Schleifen & Funktionsaufrufe einfügen
+export function transformUserCode(code) {
   const ast = acorn.parse(code, { ecmaVersion: 2020 });
-  let transformedCode = code;
 
-  walk.simple(ast, {
-    ForStatement(node) {
-      const init = code.slice(node.init.start, node.init.end);
-      const test = code.slice(node.test.start, node.test.end);
-      const update = code.slice(node.update.start, node.update.end);
-      const body = code.slice(node.body.start, node.body.end);
+  function transformNode(node) {
+    if (
+      node.type === "ExpressionStatement" &&
+      node.expression.type === "CallExpression"
+    ) {
+      // Funktionsaufrufe um `await` erweitern
+      return {
+        type: "BlockStatement",
+        body: [
+          {
+            type: "ExpressionStatement",
+            expression: {
+              type: "AwaitExpression",
+              argument: node.expression,
+            },
+          },
+          {
+            type: "ExpressionStatement",
+            expression: {
+              type: "AwaitExpression",
+              argument: {
+                type: "CallExpression",
+                callee: { type: "Identifier", name: "delay" },
+                arguments: [],
+              },
+            },
+          },
+        ],
+      };
+    } else if (
+      node.type === "ForStatement" ||
+      node.type === "WhileStatement" ||
+      node.type === "DoWhileStatement" ||
+      node.type === "ForInStatement" ||
+      node.type === "ForOfStatement"
+    ) {
+      // Alle Schleifen um `await delay()` ergänzen
+      return {
+        ...node,
+        body: {
+          type: "BlockStatement",
+          body: [
+            ...(node.body.type === "BlockStatement"
+              ? node.body.body.map(transformNode)
+              : [transformNode(node.body)]),
+            {
+              type: "ExpressionStatement",
+              expression: {
+                type: "AwaitExpression",
+                argument: {
+                  type: "CallExpression",
+                  callee: { type: "Identifier", name: "delay" },
+                  arguments: [],
+                },
+              },
+            },
+          ],
+        },
+      };
+    }
+    return node;
+  }
 
-      const newCode = `
-        ${init};
-        function loopIteration() {
-          if (${test}) {
-            ${body}
-            ${update};
-            setTimeout(loopIteration, 500);
-          }
-        }
-        loopIteration();
-      `;
-
-      transformedCode = transformedCode.replace(
-        code.slice(node.start, node.end),
-        newCode
-      );
-    },
-    WhileStatement(node) {
-      const test = code.slice(node.test.start, node.test.end);
-      const body = code.slice(node.body.start, node.body.end);
-
-      const newCode = `
-        function loopWhile() {
-          if (${test}) {
-            ${body}
-            setTimeout(loopWhile, 500);
-          }
-        }
-        loopWhile();
-      `;
-
-      transformedCode = transformedCode.replace(
-        code.slice(node.start, node.end),
-        newCode
-      );
-    },
-    ExpressionStatement(node) {
-      if (node.expression.type === "CallExpression") {
-        const callExpressionCode = code.slice(node.start, node.end);
-
-        // Wrap the function call with queueCommand
-        const wrappedCode = `
-          queueCommand(() => {
-            ${callExpressionCode}
-          });
-        `;
-
-        transformedCode = transformedCode.replace(
-          code.slice(node.start, node.end),
-          wrappedCode
-        );
-      }
-    },
+  // Transformiere alle Nodes im AST
+  ast.body = ast.body.flatMap((node) => {
+    const transformed = transformNode(node);
+    return transformed.type === "BlockStatement"
+      ? transformed.body
+      : transformed;
   });
 
-  return transformedCode;
+  return `async function runUserCode() {\n${astring.generate(
+    ast
+  )}\n}\nrunUserCode();`;
 }
