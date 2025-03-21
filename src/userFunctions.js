@@ -1,0 +1,99 @@
+let playerRef;
+let mapRef;
+let rowsRef;
+let colsRef;
+let drawGridRef;
+let checkTreasureRef;
+
+export function initGame(gameState) {
+  playerRef = gameState.player;
+  mapRef = gameState.map;
+  rowsRef = gameState.rows;
+  colsRef = gameState.cols;
+  drawGridRef = gameState.drawGrid;
+  checkTreasureRef = gameState.checkTreasure;
+}
+
+function logAction(action) {
+  const logOutput = document.getElementById("logOutput");
+  const logEntry = document.createElement("div");
+  logEntry.textContent = `→ ${action}`;
+  logOutput.appendChild(logEntry);
+  logOutput.scrollTop = logOutput.scrollHeight;
+}
+
+export function moveForward() {
+  let newX = playerRef.x;
+  let newY = playerRef.y;
+
+  switch (playerRef.direction) {
+    case "up":
+      newY--;
+      break;
+    case "down":
+      newY++;
+      break;
+    case "left":
+      newX--;
+      break;
+    case "right":
+      newX++;
+      break;
+  }
+
+  // Prüfen, ob die neue Position innerhalb des Spielfelds liegt und Land ist
+  if (
+    newX >= 0 &&
+    newX < colsRef &&
+    newY >= 0 &&
+    newY < rowsRef &&
+    mapRef[newY][newX] === 1
+  ) {
+    playerRef.x = newX;
+    playerRef.y = newY;
+  }
+
+  drawGridRef();
+  checkTreasureRef();
+  logAction("moveForward()");
+}
+
+export function noWater() {
+  const result = (() => {
+    switch (playerRef.direction) {
+      case "up":
+        return mapRef[playerRef.y - 1]?.[playerRef.x] === 1;
+      case "down":
+        return mapRef[playerRef.y + 1]?.[playerRef.x] === 1;
+      case "left":
+        return mapRef[playerRef.y]?.[playerRef.x - 1] === 1;
+      case "right":
+        return mapRef[playerRef.y]?.[playerRef.x + 1] === 1;
+    }
+  })();
+
+  logAction(`noWater() → ${result}`);
+  return result;
+}
+
+export function turnLeft() {
+  const directions = ["up", "right", "down", "left"];
+  const currentIndex = directions.indexOf(playerRef.direction);
+  playerRef.direction = directions[(currentIndex + 3) % 4];
+  drawGridRef();
+  logAction("turnLeft()");
+}
+
+export function turnRight() {
+  const directions = ["up", "right", "down", "left"];
+  const currentIndex = directions.indexOf(playerRef.direction);
+  playerRef.direction = directions[(currentIndex + 1) % 4];
+  drawGridRef();
+  logAction("turnRight()");
+}
+
+function checkTreasure() {
+  if (player.x === treasure.x && player.y === treasure.y) {
+    alert("Schatz gefunden!");
+  }
+}

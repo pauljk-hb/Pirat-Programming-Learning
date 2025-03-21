@@ -1,4 +1,5 @@
 import * as monaco from "monaco-editor";
+import { parsedCode } from "./codePaser.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -8,23 +9,36 @@ const gridSize = 50;
 const rows = 10;
 const cols = 10;
 
-let player = { x: 1, y: 4, direction: "up" };
+let player = { x: 1, y: 9, direction: "up" };
 let treasure = { x: 8, y: 6 };
+
+const map = [
+  [0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+  [0, 0, 1, 0, 0, 1, 1, 1, 1, 1],
+  [1, 1, 1, 0, 0, 1, 0, 0, 1, 1],
+  [1, 0, 1, 1, 1, 1, 0, 0, 1, 1],
+  [1, 0, 1, 0, 0, 1, 1, 1, 1, 1],
+  [1, 1, 1, 0, 0, 0, 0, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+];
 
 function drawGrid() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Zeichne das Spielfeld
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
+      ctx.fillStyle = map[y][x] === 1 ? "#a3d977" : "#6fb3d2"; // Land = Grün, Wasser = Blau
+      ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
       ctx.strokeRect(x * gridSize, y * gridSize, gridSize, gridSize);
     }
   }
 
-  // Zeichne den Spieler
+  // Spieler zeichnen
   drawPlayer();
 
-  // Zeichne den Schatz
+  // Schatz zeichnen
   ctx.fillStyle = "gold";
   ctx.fillRect(
     treasure.x * gridSize,
@@ -70,54 +84,7 @@ function drawPlayer() {
   ctx.restore(); // Wiederherstellen des ursprünglichen Canvas-Zustands
 }
 
-function move(direction) {
-  switch (player.direction) {
-    case "up":
-      if (direction === "up" && player.y > 0) player.y--;
-      if (direction === "down" && player.y < rows - 1) player.y++;
-      if (direction === "left" && player.x > 0) player.x--;
-      if (direction === "right" && player.x < cols - 1) player.x++;
-      break;
-
-    case "right":
-      if (direction === "up" && player.x < cols - 1) player.x++;
-      if (direction === "down" && player.x > 0) player.x--;
-      if (direction === "left" && player.y < rows - 1) player.y++;
-      if (direction === "right" && player.y > 0) player.y--;
-      break;
-
-    case "down":
-      if (direction === "up" && player.y < rows - 1) player.y++;
-      if (direction === "down" && player.y > 0) player.y--;
-      if (direction === "left" && player.x < cols - 1) player.x++;
-      if (direction === "right" && player.x > 0) player.x--;
-      break;
-
-    case "left":
-      if (direction === "up" && player.x > 0) player.x--;
-      if (direction === "down" && player.x < cols - 1) player.x++;
-      if (direction === "left" && player.y > 0) player.y--;
-      if (direction === "right" && player.y < rows - 1) player.y++;
-      break;
-  }
-
-  drawGrid();
-  checkTreasure();
-}
-
-function turnLeft() {
-  const directions = ["up", "right", "down", "left"];
-  const currentIndex = directions.indexOf(player.direction);
-  player.direction = directions[(currentIndex + 3) % 4];
-  drawGrid();
-}
-
-function turnRight() {
-  const directions = ["up", "right", "down", "left"];
-  const currentIndex = directions.indexOf(player.direction);
-  player.direction = directions[(currentIndex + 1) % 4];
-  drawGrid();
-}
+// Bewegungsfunktionen
 
 // Überprüfen, ob der Schatz gefunden wurde
 function checkTreasure() {
@@ -139,16 +106,39 @@ const editor = monaco.editor.create(document.getElementById("editor"), {
   quickSuggestions: { other: true, strings: true, comments: true },
 });
 
-runButton.addEventListener("click", () => {
-  const code = editor.getValue(); // Hole den geschriebenen Code aus dem Editor
+runButton.addEventListener("click", async () => {
+  const code = editor.getValue();
+  const evalCode = parsedCode(code);
 
   try {
-    // Verwende eval, um den Code auszuführen
-    eval(code);
+    eval(evalCode);
   } catch (e) {
-    // Fehlerbehandlung, falls der Code nicht richtig ist
     alert("Fehler im Code: " + e.message);
   }
 });
+
+import {
+  moveForward,
+  noWater,
+  turnLeft,
+  turnRight,
+  initGame,
+} from "./userFunctions.js";
+
+// Initialisiere `userFunctions.js` mit dem Spielfeld und den Spieler-Daten
+initGame({
+  player,
+  map,
+  rows,
+  cols,
+  drawGrid,
+  checkTreasure,
+});
+
+// Damit die Benutzerfunktionen in eval() genutzt werden können
+window.moveForward = moveForward;
+window.noWater = noWater;
+window.turnLeft = turnLeft;
+window.turnRight = turnRight;
 
 drawGrid();

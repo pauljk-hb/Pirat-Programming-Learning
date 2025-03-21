@@ -9,12 +9,23 @@
     <title>Vite App</title>
   </head>
   <body>
-    <div class="canvas-wraper">
-      <canvas id="gameCanvas" width="500" height="500"></canvas>
+    <div class="flex">
+      <div class="canvas-wraper">
+        <canvas id="gameCanvas" width="500" height="500"></canvas>
+      </div>
+      <div class="editor-wraper">
+        <div id="editor" style="width: 500px; height: 450px"></div>
+        <button id="runCode">Code ausführen</button>
+      </div>
     </div>
-    <div class="editor-wraper">
-      <div id="editor" style="width: 500px; height: 200px"></div>
-      <button id="runCode">Code ausführen</button>
-    </div>
+    <div
+      id="logOutput"
+      style="
+        border: 1px solid #ccc;
+        padding: 10px;
+        height: 150px;
+        overflow-y: auto;
+      "
+    ></div>
   </body>
 </html>
