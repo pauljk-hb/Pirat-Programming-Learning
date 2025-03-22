@@ -105,6 +105,11 @@ const resetButton = document.getElementById("resetGame");
 resetButton.addEventListener("click", reset);
 
 async function reset() {
+  // Stoppe die Ausführung des Benutzer-Codes
+  if (window.currentExecution) {
+    window.currentExecution.cancelled = true;
+  }
+  window.currentExecution = { cancelled: false };
   // Spieler auf die Startposition zurücksetzen
   player.x = player.userX || 0;
   player.y = player.userY || 0;

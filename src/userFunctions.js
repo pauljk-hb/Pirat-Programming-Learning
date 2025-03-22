@@ -33,6 +33,8 @@ function delay(ms = 500) {
 }
 
 export async function move() {
+  if (window.currentExecution?.cancelled) return;
+
   let newX = playerRef.x;
   let newY = playerRef.y;
 
@@ -70,6 +72,8 @@ export async function move() {
 }
 
 export async function noWater() {
+  if (window.currentExecution?.cancelled) return;
+
   const result = (() => {
     switch (playerRef.direction) {
       case "up":
@@ -84,11 +88,14 @@ export async function noWater() {
   })();
 
   logAction(`noWater() → ${result}`, result ? "green" : "red");
+  console.log(result);
   await delay(500);
   return result;
 }
 
 export async function turnLeft() {
+  if (window.currentExecution?.cancelled) return;
+
   const directions = ["up", "right", "down", "left"];
   const currentIndex = directions.indexOf(playerRef.direction);
   playerRef.direction = directions[(currentIndex + 3) % 4];
@@ -98,6 +105,8 @@ export async function turnLeft() {
 }
 
 export async function turnRight() {
+  if (window.currentExecution?.cancelled) return;
+
   const directions = ["up", "right", "down", "left"];
   const currentIndex = directions.indexOf(playerRef.direction);
   playerRef.direction = directions[(currentIndex + 1) % 4];
