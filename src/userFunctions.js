@@ -130,5 +130,5 @@ export async function links() {
 }
 
 export async function vorneFrei() {
-  await noWater();
+  return await noWater();
 }

@@ -9,38 +9,26 @@ export function transformUserCode(code) {
   // AST durchlaufen und relevante Knoten finden
   walk.simple(ast, {
     CallExpression(node) {
-      // Funktionsaufrufe um `await` erweitern
+      // Funktionsaufrufe wie `move()`, `turnLeft()`, etc. um `await` erweitern
       if (
-        [
-          "move",
-          "turnLeft",
-          "turnRight",
-          "noWater",
-          "vor",
-          "vorneFrei",
-          "links",
-        ].includes(node.callee.name)
+        ["move", "turnLeft", "turnRight", "noWater", "vor", "links"].includes(
+          node.callee.name
+        )
       ) {
-        modifications.push({ type: "await", start: node.start });
+        // Prüfen, ob bereits ein `await` vorhanden ist
+        if (node.type !== "AwaitExpression") {
+          modifications.push({ type: "await", start: node.start });
+        }
       }
     },
-    IfStatement(node) {
-      // `await` für asynchrone Funktionsaufrufe in `if`-Bedingungen
-      if (
-        node.test.type === "CallExpression" &&
-        ["vorneFrei", "noWater"].includes(node.test.callee.name)
-      ) {
-        modifications.push({ type: "await", start: node.test.start });
-      }
-    },
-    ForStatement(node) {
-      // `await delay();` am Ende von Schleifenblöcken hinzufügen
+    WhileStatement(node) {
+      // Verzögerung am Ende des Schleifenblocks hinzufügen
       if (node.body.type === "BlockStatement") {
         modifications.push({ type: "delay", insertAfter: node.body.end });
       }
     },
-    WhileStatement(node) {
-      // `await delay();` am Ende von While-Schleifen hinzufügen
+    ForStatement(node) {
+      // Verzögerung am Ende von Schleifenblöcken hinzufügen
       if (node.body.type === "BlockStatement") {
         modifications.push({ type: "delay", insertAfter: node.body.end });
       }
@@ -51,11 +39,16 @@ export function transformUserCode(code) {
   let transformedCode = code;
   modifications.reverse().forEach((mod) => {
     if (mod.type === "await") {
-      transformedCode =
-        transformedCode.slice(0, mod.start) +
-        "await " +
-        transformedCode.slice(mod.start);
+      // Prüfen, ob bereits ein `await` vorhanden ist
+      const before = transformedCode.slice(0, mod.start).trimEnd();
+      if (!before.endsWith("await")) {
+        transformedCode =
+          transformedCode.slice(0, mod.start) +
+          "await " +
+          transformedCode.slice(mod.start);
+      }
     } else if (mod.type === "delay") {
+      // `await delay();` nach Schleifenblock einfügen
       transformedCode =
         transformedCode.slice(0, mod.insertAfter) +
         "\n  await delay();" +
