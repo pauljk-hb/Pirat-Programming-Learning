@@ -116,3 +116,38 @@ body {
 .red {
   color: red;
 }
+
+/* Styling für die Funktion-Liste */
+.function-list {
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+.function-list h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.function-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.function-list h4 {
+  font-size: 1.2rem;
+  color: #007bff;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.function-list li {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.function-list li strong {
+  color: #333;
+  font-weight: bold;
+}
