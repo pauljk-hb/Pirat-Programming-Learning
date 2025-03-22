@@ -145,6 +145,9 @@ runButton.addEventListener("click", async () => {
   const userCode = editor.getValue(); // User-Code holen
   const transformedCode = transformUserCode(userCode); // Code transformieren
 
+  const logOutput = document.getElementById("logOutput");
+  logOutput.innerHTML = "";
+
   try {
     await eval(transformedCode); // Asynchronen Code ausführen
   } catch (e) {
@@ -196,6 +199,9 @@ import {
   turnLeft,
   turnRight,
   initGame,
+  vor,
+  links,
+  vorneFrei,
 } from "./userFunctions.js";
 
 // Initialisiere `userFunctions.js` mit dem Spielfeld und den Spieler-Daten
@@ -213,5 +219,8 @@ window.moveForward = moveForward;
 window.noWater = noWater;
 window.turnLeft = turnLeft;
 window.turnRight = turnRight;
+window.vor = vor;
+window.links = links;
+window.vorneFrei = vorneFrei;
 
 drawGrid();

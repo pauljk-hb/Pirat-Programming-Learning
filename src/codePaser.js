@@ -4,63 +4,69 @@ import * as walk from "acorn-walk";
 export function transformUserCode(code) {
   const ast = acorn.parse(code, { ecmaVersion: 2020 });
 
-  // Liste der Änderungen, die wir vornehmen wollen
   const modifications = [];
 
   // AST durchlaufen und relevante Knoten finden
   walk.simple(ast, {
     CallExpression(node) {
-      // Funktionsaufrufe wie `moveForward()`, `turnLeft()` etc. um `await` erweitern
+      // Funktionsaufrufe um `await` erweitern
       if (
-        ["moveForward", "turnLeft", "turnRight", "noWater"].includes(
-          node.callee.name
-        )
+        [
+          "moveForward",
+          "turnLeft",
+          "turnRight",
+          "noWater",
+          "vor",
+          "vorneFrei",
+          "links",
+        ].includes(node.callee.name)
       ) {
-        modifications.push({
-          type: "await",
-          start: node.start,
-          end: node.end,
-        });
+        modifications.push({ type: "await", start: node.start });
+      }
+    },
+    IfStatement(node) {
+      // `await` für asynchrone Funktionsaufrufe in `if`-Bedingungen
+      if (
+        node.test.type === "CallExpression" &&
+        ["vorneFrei", "noWater"].includes(node.test.callee.name)
+      ) {
+        modifications.push({ type: "await", start: node.test.start });
       }
     },
     ForStatement(node) {
-      // `await delay()` am Ende von Schleifen hinzufügen
+      // `await delay();` am Ende von Schleifenblöcken hinzufügen
       if (node.body.type === "BlockStatement") {
-        modifications.push({
-          type: "delay",
-          insertAfter: node.body.end - 1,
-        });
+        modifications.push({ type: "delay", insertAfter: node.body.end });
       }
     },
     WhileStatement(node) {
-      // `await delay()` am Ende von While-Schleifen hinzufügen
+      // `await delay();` am Ende von While-Schleifen hinzufügen
       if (node.body.type === "BlockStatement") {
-        modifications.push({
-          type: "delay",
-          insertAfter: node.body.end - 1,
-        });
+        modifications.push({ type: "delay", insertAfter: node.body.end });
       }
     },
   });
 
-  // Originalcode in ein Array von Zeichen umwandeln
-  let transformedCode = code.split("");
-
-  // Änderungen rückwärts anwenden, um die Positionen nicht zu verschieben
+  // Änderungen rückwärts anwenden, um keine Offsets zu verschieben
+  let transformedCode = code;
   modifications.reverse().forEach((mod) => {
     if (mod.type === "await") {
-      // `await` vor Funktionsaufruf einfügen
-      transformedCode.splice(mod.start, 0, "await ");
+      transformedCode =
+        transformedCode.slice(0, mod.start) +
+        "await " +
+        transformedCode.slice(mod.start);
     } else if (mod.type === "delay") {
-      // `await delay();` nach Schleifenblock einfügen
-      transformedCode.splice(mod.insertAfter + 1, 0, "\n  await delay();");
+      transformedCode =
+        transformedCode.slice(0, mod.insertAfter) +
+        "\n  await delay();" +
+        transformedCode.slice(mod.insertAfter);
     }
   });
 
-  // Transformierten Code zusammenfügen und in eine async-Funktion einbetten
+  // Transformierten Code in eine async-Funktion einbetten
   const finalCode = `
     async function runUserCode() {
-      ${transformedCode.join("")}
+      ${transformedCode}
     }
     runUserCode();
   `;

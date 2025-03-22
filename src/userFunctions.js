@@ -14,10 +14,13 @@ export function initGame(gameState) {
   checkTreasureRef = gameState.checkTreasure;
 }
 
-function logAction(action) {
+function logAction(action, styling = "") {
   const logOutput = document.getElementById("logOutput");
   const logEntry = document.createElement("div");
   logEntry.textContent = `→ ${action}`;
+  if (styling) {
+    logEntry.className = styling;
+  }
   logOutput.appendChild(logEntry);
   logOutput.scrollTop = logOutput.scrollHeight;
 }
@@ -80,7 +83,7 @@ export async function noWater() {
     }
   })();
 
-  logAction(`noWater() → ${result}`);
+  logAction(`noWater() → ${result}`, result ? "green" : "red");
   await delay(500);
   return result;
 }
@@ -107,4 +110,16 @@ function checkTreasure() {
   if (player.x === treasure.x && player.y === treasure.y) {
     alert("Schatz gefunden!");
   }
+}
+
+export async function vor() {
+  await moveForward();
+}
+
+export async function links() {
+  await turnLeft();
+}
+
+export async function vorneFrei() {
+  await noWater();
 }
