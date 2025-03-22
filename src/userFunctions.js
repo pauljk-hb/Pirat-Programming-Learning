@@ -32,7 +32,7 @@ function delay(ms = 500) {
   );
 }
 
-export async function moveForward() {
+export async function move() {
   let newX = playerRef.x;
   let newY = playerRef.y;
 
@@ -65,7 +65,7 @@ export async function moveForward() {
 
   drawGridRef();
   await checkTreasureRef();
-  logAction("moveForward()");
+  logAction("move()");
   await delay(500);
 }
 
@@ -113,7 +113,7 @@ function checkTreasure() {
 }
 
 export async function vor() {
-  await moveForward();
+  await move();
 }
 
 export async function links() {

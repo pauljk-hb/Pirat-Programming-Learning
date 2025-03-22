@@ -12,7 +12,7 @@ export function transformUserCode(code) {
       // Funktionsaufrufe um `await` erweitern
       if (
         [
-          "moveForward",
+          "move",
           "turnLeft",
           "turnRight",
           "noWater",

@@ -9,7 +9,14 @@ const gridSize = 50;
 const rows = 10;
 const cols = 10;
 
-let player = { x: 1, y: 9, direction: "up" };
+let player = {
+  x: 0,
+  y: 0,
+  direction: "up",
+  userX: undefined,
+  userY: undefined,
+  userDirection: undefined,
+};
 let treasure = { x: 8, y: 6 };
 
 const map = [
@@ -95,11 +102,13 @@ function checkTreasure() {
 
 const resetButton = document.getElementById("resetGame");
 
-resetButton.addEventListener("click", () => {
+resetButton.addEventListener("click", reset);
+
+async function reset() {
   // Spieler auf die Startposition zurücksetzen
-  player.x = 1;
-  player.y = 9;
-  player.direction = "up";
+  player.x = player.userX || 0;
+  player.y = player.userY || 0;
+  player.direction = player.userDirection || "up";
 
   // Log-Ausgabe leeren
   const logOutput = document.getElementById("logOutput");
@@ -107,7 +116,8 @@ resetButton.addEventListener("click", () => {
 
   // Spielfeld neu zeichnen
   drawGrid();
-});
+  await delay();
+}
 
 window.MonacoEnvironment = {
   getWorkerUrl: function (moduleId, label) {
@@ -134,19 +144,20 @@ speedControl.addEventListener("input", (event) => {
   window.executionSpeed = executionSpeed; // Globale Variable aktualisieren
 });
 
-function delay(ms = window.executionSpeed || 500) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+function delay(ms = 500) {
+  // Verwende die globale Variable executionSpeed, falls verfügbar
+  return new Promise((resolve) =>
+    setTimeout(resolve, window.executionSpeed || ms)
+  );
 }
 
 // Mache delay global verfügbar
 window.delay = delay;
 
 runButton.addEventListener("click", async () => {
+  await reset();
   const userCode = editor.getValue(); // User-Code holen
   const transformedCode = transformUserCode(userCode); // Code transformieren
-
-  const logOutput = document.getElementById("logOutput");
-  logOutput.innerHTML = "";
 
   try {
     await eval(transformedCode); // Asynchronen Code ausführen
@@ -169,7 +180,9 @@ canvas.addEventListener("click", (event) => {
   console.log(`Clicked on grid cell: (${x}, ${y})`);
 
   if (selectedValue === "player") {
+    player.userX = x;
     player.x = x;
+    player.userY = y;
     player.y = y;
   } else if (selectedValue === "land") {
     map[y][x] = 1;
@@ -193,8 +206,16 @@ radioButtons.forEach((radioButton) => {
   });
 });
 
+document.getElementById("rotate-btn").addEventListener("click", () => {
+  const directions = ["up", "right", "down", "left"];
+  const currentIndex = directions.indexOf(player.direction);
+  player.userDirection = directions[(currentIndex + 3) % 4];
+  player.direction = directions[(currentIndex + 3) % 4];
+  drawGrid();
+});
+
 import {
-  moveForward,
+  move,
   noWater,
   turnLeft,
   turnRight,
@@ -215,7 +236,7 @@ initGame({
 });
 
 // Damit die Benutzerfunktionen in eval() genutzt werden können
-window.moveForward = moveForward;
+window.move = move;
 window.noWater = noWater;
 window.turnLeft = turnLeft;
 window.turnRight = turnRight;
