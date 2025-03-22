@@ -9,6 +9,30 @@
     <title>Vite App</title>
   </head>
   <body>
+    <div class="control-panel">
+      <label for="speedControl">Geschwindigkeit (ms):</label>
+      <input id="speedControl" type="range" value="5" min="1" max="10" />
+      <div>
+        <label>
+          <input type="radio" name="level-design" value="player" checked />
+          PLayer
+        </label>
+        <label>
+          <input type="radio" name="level-design" value="land" />
+          Land
+        </label>
+        <label>
+          <input type="radio" name="level-design" value="water" />
+          Wasser
+        </label>
+        <label>
+          <input type="radio" name="level-design" value="treasure" />
+          Schatz
+        </label>
+      </div>
+      <button id="resetGame">Reset</button>
+    </div>
+
     <div class="flex">
       <div class="canvas-wraper">
         <canvas id="gameCanvas" width="500" height="500"></canvas>
@@ -18,14 +42,6 @@
         <button id="runCode">Code ausführen</button>
       </div>
     </div>
-    <div
-      id="logOutput"
-      style="
-        border: 1px solid #ccc;
-        padding: 10px;
-        height: 150px;
-        overflow-y: auto;
-      "
-    ></div>
+    <div id="logOutput"></div>
   </body>
 </html>

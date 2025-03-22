@@ -13,16 +13,16 @@ let player = { x: 1, y: 9, direction: "up" };
 let treasure = { x: 8, y: 6 };
 
 const map = [
-  [0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
-  [0, 0, 1, 0, 0, 1, 1, 1, 1, 1],
-  [1, 1, 1, 0, 0, 1, 0, 0, 1, 1],
-  [1, 0, 1, 1, 1, 1, 0, 0, 1, 1],
-  [1, 0, 1, 0, 0, 1, 1, 1, 1, 1],
-  [1, 1, 1, 0, 0, 0, 0, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 1, 0, 1, 1, 1, 0, 0],
+  [0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+  [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+  [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+  [0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+  [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+  [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+  [0, 1, 1, 1, 1, 1, 1, 0, 1, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
 function drawGrid() {
@@ -93,6 +93,22 @@ function checkTreasure() {
   }
 }
 
+const resetButton = document.getElementById("resetGame");
+
+resetButton.addEventListener("click", () => {
+  // Spieler auf die Startposition zurücksetzen
+  player.x = 1;
+  player.y = 9;
+  player.direction = "up";
+
+  // Log-Ausgabe leeren
+  const logOutput = document.getElementById("logOutput");
+  logOutput.innerHTML = "";
+
+  // Spielfeld neu zeichnen
+  drawGrid();
+});
+
 window.MonacoEnvironment = {
   getWorkerUrl: function (moduleId, label) {
     return `${window.location.origin}/monaco-editor/min/vs/base/worker/workerMain.js`;
@@ -106,8 +122,24 @@ const editor = monaco.editor.create(document.getElementById("editor"), {
   quickSuggestions: { other: true, strings: true, comments: true },
 });
 
-// Globale Verzögerungsfunktion
-window.delay = (ms = 500) => new Promise((resolve) => setTimeout(resolve, ms));
+let executionSpeed = 500; // Standardgeschwindigkeit in Millisekunden
+window.executionSpeed = executionSpeed; // Globale Verfügbarkeit
+
+const speedControl = document.getElementById("speedControl");
+
+// Aktualisiere die Geschwindigkeit basierend auf dem Schieberegler
+speedControl.addEventListener("input", (event) => {
+  const speedValue = parseInt(event.target.value, 10);
+  executionSpeed = 1100 - speedValue * 100; // Geschwindigkeit umrechnen (1 = langsam, 10 = schnell)
+  window.executionSpeed = executionSpeed; // Globale Variable aktualisieren
+});
+
+function delay(ms = window.executionSpeed || 500) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Mache delay global verfügbar
+window.delay = delay;
 
 runButton.addEventListener("click", async () => {
   const userCode = editor.getValue(); // User-Code holen
@@ -118,6 +150,44 @@ runButton.addEventListener("click", async () => {
   } catch (e) {
     alert("Fehler im Code: " + e.message);
   }
+});
+
+const radioButtons = document.querySelectorAll('input[name="level-design"]');
+
+// Variable, um den aktuellen Wert des ausgewählten Radio-Buttons zu speichern
+let selectedValue = "player";
+
+// Entferne alte Event-Listener und füge einen neuen hinzu
+canvas.addEventListener("click", (event) => {
+  const rect = canvas.getBoundingClientRect();
+  const x = Math.floor((event.clientX - rect.left) / gridSize);
+  const y = Math.floor((event.clientY - rect.top) / gridSize);
+
+  console.log(`Clicked on grid cell: (${x}, ${y})`);
+
+  if (selectedValue === "player") {
+    player.x = x;
+    player.y = y;
+  } else if (selectedValue === "land") {
+    map[y][x] = 1;
+  } else if (selectedValue === "water") {
+    map[y][x] = 0;
+  } else if (selectedValue === "treasure") {
+    treasure.x = x;
+    treasure.y = y;
+  }
+
+  drawGrid();
+});
+
+// Event-Listener für die Radio-Buttons
+radioButtons.forEach((radioButton) => {
+  radioButton.addEventListener("change", (event) => {
+    if (event.target.checked) {
+      selectedValue = event.target.value || "player";
+      console.log(`Selected value: ${selectedValue}`);
+    }
+  });
 });
 
 import {

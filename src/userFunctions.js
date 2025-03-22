@@ -22,7 +22,14 @@ function logAction(action) {
   logOutput.scrollTop = logOutput.scrollHeight;
 }
 
-export function moveForward() {
+function delay(ms = 500) {
+  // Verwende die globale Variable executionSpeed, falls verfügbar
+  return new Promise((resolve) =>
+    setTimeout(resolve, window.executionSpeed || ms)
+  );
+}
+
+export async function moveForward() {
   let newX = playerRef.x;
   let newY = playerRef.y;
 
@@ -54,11 +61,12 @@ export function moveForward() {
   }
 
   drawGridRef();
-  checkTreasureRef();
+  await checkTreasureRef();
   logAction("moveForward()");
+  await delay(500);
 }
 
-export function noWater() {
+export async function noWater() {
   const result = (() => {
     switch (playerRef.direction) {
       case "up":
@@ -73,23 +81,26 @@ export function noWater() {
   })();
 
   logAction(`noWater() → ${result}`);
+  await delay(500);
   return result;
 }
 
-export function turnLeft() {
+export async function turnLeft() {
   const directions = ["up", "right", "down", "left"];
   const currentIndex = directions.indexOf(playerRef.direction);
   playerRef.direction = directions[(currentIndex + 3) % 4];
   drawGridRef();
   logAction("turnLeft()");
+  await delay(500);
 }
 
-export function turnRight() {
+export async function turnRight() {
   const directions = ["up", "right", "down", "left"];
   const currentIndex = directions.indexOf(playerRef.direction);
   playerRef.direction = directions[(currentIndex + 1) % 4];
   drawGridRef();
   logAction("turnRight()");
+  await delay(500);
 }
 
 function checkTreasure() {
