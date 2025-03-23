@@ -87,7 +87,7 @@ export async function noWater() {
     }
   })();
 
-  logAction(`noWater() → ${result}`, result ? "green" : "red");
+  logAction(`noWater() : ${result}`, result ? "green" : "orange");
   console.log(result);
   await delay(500);
   return result;

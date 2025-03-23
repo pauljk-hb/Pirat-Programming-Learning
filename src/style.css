@@ -117,6 +117,10 @@ body {
   color: red;
 }
 
+.orange {
+  color: orange;
+}
+
 /* Styling für die Funktion-Liste */
 .function-list {
   padding: 1rem;

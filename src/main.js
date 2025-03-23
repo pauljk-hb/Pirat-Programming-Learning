@@ -167,9 +167,20 @@ runButton.addEventListener("click", async () => {
   try {
     await eval(transformedCode); // Asynchronen Code ausführen
   } catch (e) {
-    alert("Fehler im Code: " + e.message);
+    logAction("Fehler im Code: " + e.message, "red");
   }
 });
+
+function logAction(action, styling = "") {
+  const logOutput = document.getElementById("logOutput");
+  const logEntry = document.createElement("div");
+  logEntry.textContent = `→ ${action}`;
+  if (styling) {
+    logEntry.className = styling;
+  }
+  logOutput.appendChild(logEntry);
+  logOutput.scrollTop = logOutput.scrollHeight;
+}
 
 const radioButtons = document.querySelectorAll('input[name="level-design"]');
 
