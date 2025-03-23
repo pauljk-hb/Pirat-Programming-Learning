@@ -3,7 +3,8 @@ let mapRef;
 let rowsRef;
 let colsRef;
 let drawGridRef;
-let checkTreasureRef;
+let treasureRef;
+let drawCrossRef;
 
 export function initGame(gameState) {
   playerRef = gameState.player;
@@ -11,7 +12,8 @@ export function initGame(gameState) {
   rowsRef = gameState.rows;
   colsRef = gameState.cols;
   drawGridRef = gameState.drawGrid;
-  checkTreasureRef = gameState.checkTreasure;
+  treasureRef = gameState.treasure;
+  drawCrossRef = gameState.drawCross;
 }
 
 function logAction(action, styling = "") {
@@ -66,7 +68,6 @@ export async function move() {
   }
 
   drawGridRef();
-  await checkTreasureRef();
   logAction("move()");
   await delay(500);
 }
@@ -93,6 +94,12 @@ export async function noWater() {
   return result;
 }
 
+export async function setMarker() {
+  drawCrossRef(playerRef.x, playerRef.y);
+  logAction("setMarker()");
+  await delay(500);
+}
+
 export async function turnLeft() {
   if (window.currentExecution?.cancelled) return;
 
@@ -104,20 +111,16 @@ export async function turnLeft() {
   await delay(500);
 }
 
-export async function turnRight() {
-  if (window.currentExecution?.cancelled) return;
-
-  const directions = ["up", "right", "down", "left"];
-  const currentIndex = directions.indexOf(playerRef.direction);
-  playerRef.direction = directions[(currentIndex + 1) % 4];
-  drawGridRef();
-  logAction("turnRight()");
-  await delay(500);
-}
-
-function checkTreasure() {
-  if (player.x === treasure.x && player.y === treasure.y) {
-    alert("Schatz gefunden!");
+export async function onTreasure() {
+  console.log(playerRef, treasureRef);
+  if (playerRef.x === treasureRef.x && playerRef.y === treasureRef.y) {
+    logAction(`✨ onTreasure() : true`, "green");
+    await delay(500);
+    return true;
+  } else {
+    logAction(`onTreasure() : false`, "orange");
+    await delay(500);
+    return false;
   }
 }
 
@@ -131,4 +134,12 @@ export async function links() {
 
 export async function vorneFrei() {
   return await noWater();
+}
+
+export async function aufSchatz() {
+  return await onTreasure();
+}
+
+export async function setzteMarkierung() {
+  await setMarker();
 }

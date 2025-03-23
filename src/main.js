@@ -32,6 +32,51 @@ const map = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
+// Speichere die Positionen der Kreuze
+const crosses = [];
+
+function drawCross(x, y) {
+  // Speichere die Position des Kreuzes, falls es noch nicht existiert
+  if (!crosses.some((cross) => cross.x === x && cross.y === y)) {
+    crosses.push({ x, y });
+  }
+
+  // Zeichne alle gespeicherten Kreuze
+  crosses.forEach((cross) => {
+    ctx.save(); // Speichere den aktuellen Zustand des Canvas
+
+    const lineWidth = 5;
+    const padding = 10;
+
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = lineWidth;
+
+    // Zeichne die diagonale Linie von oben links nach unten rechts
+    ctx.beginPath();
+    ctx.moveTo(cross.x * gridSize + padding, cross.y * gridSize + padding);
+    ctx.lineTo(
+      (cross.x + 1) * gridSize - padding,
+      (cross.y + 1) * gridSize - padding
+    );
+    ctx.stroke();
+
+    // Zeichne die diagonale Linie von oben rechts nach unten links
+    ctx.beginPath();
+    ctx.moveTo(
+      (cross.x + 1) * gridSize - padding,
+      cross.y * gridSize + padding
+    );
+    ctx.lineTo(
+      cross.x * gridSize + padding,
+      (cross.y + 1) * gridSize - padding
+    );
+    ctx.stroke();
+
+    ctx.restore(); // Wiederherstellen des ursprünglichen Canvas-Zustands
+  });
+}
+
+// Stelle sicher, dass drawCross bei jedem Aufruf von drawGrid berücksichtigt wird
 function drawGrid() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (let x = 0; x < cols; x++) {
@@ -53,6 +98,9 @@ function drawGrid() {
     gridSize,
     gridSize
   );
+
+  // Kreuze zeichnen
+  drawCross();
 }
 
 function drawPlayer() {
@@ -96,7 +144,6 @@ function drawPlayer() {
 // Überprüfen, ob der Schatz gefunden wurde
 function checkTreasure() {
   if (player.x === treasure.x && player.y === treasure.y) {
-    alert("Schatz gefunden!");
   }
 }
 
@@ -119,6 +166,8 @@ async function reset() {
   const logOutput = document.getElementById("logOutput");
   logOutput.innerHTML = "";
 
+  // Entferne alle gespeicherten Kreuze
+  crosses.length = 0;
   // Spielfeld neu zeichnen
   drawGrid();
   await delay();
@@ -234,11 +283,14 @@ import {
   move,
   noWater,
   turnLeft,
-  turnRight,
   initGame,
   vor,
   links,
   vorneFrei,
+  onTreasure,
+  aufSchatz,
+  setMarker,
+  setzteMarkierung,
 } from "./userFunctions.js";
 
 // Initialisiere `userFunctions.js` mit dem Spielfeld und den Spieler-Daten
@@ -248,16 +300,20 @@ initGame({
   rows,
   cols,
   drawGrid,
-  checkTreasure,
+  treasure,
+  drawCross,
 });
 
 // Damit die Benutzerfunktionen in eval() genutzt werden können
 window.move = move;
 window.noWater = noWater;
 window.turnLeft = turnLeft;
-window.turnRight = turnRight;
 window.vor = vor;
 window.links = links;
 window.vorneFrei = vorneFrei;
+window.onTreasure = onTreasure;
+window.aufSchatz = aufSchatz;
+window.setMarker = setMarker;
+window.setzteMarkierung = setzteMarkierung;
 
 drawGrid();

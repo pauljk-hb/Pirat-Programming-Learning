@@ -40,9 +40,6 @@ export function transformUserCode(code) {
       index ===
       self.findIndex((m) => m.type === mod.type && m.start === mod.start)
   );
-
-  console.log("Modifications before applying:", filteredModifications);
-
   let transformedCode = code;
 
   filteredModifications
@@ -64,8 +61,6 @@ export function transformUserCode(code) {
           transformedCode.slice(mod.start);
       }
     });
-
-  console.log("Transformed Code:", transformedCode);
 
   const finalCode = `
     async function runUserCode() {
