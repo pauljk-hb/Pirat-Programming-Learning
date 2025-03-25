@@ -81,7 +81,7 @@ body {
 }
 
 /* Styling für die Radio-Buttons und Labels */
-.control-panel div {
+.control-panel > div {
   display: flex;
   gap: 1rem;
   align-items: center;

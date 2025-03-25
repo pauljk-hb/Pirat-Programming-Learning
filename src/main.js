@@ -279,6 +279,66 @@ document.getElementById("rotate-btn").addEventListener("click", () => {
   drawGrid();
 });
 
+// Level speichern
+document.getElementById("saveLevel").addEventListener("click", () => {
+  console.log(editor.getValue());
+  const levelData = {
+    player: { x: player.x, y: player.y, direction: player.direction },
+    treasure: { x: treasure.x, y: treasure.y },
+    map,
+    code: editor.getValue(),
+  };
+
+  const blob = new Blob([JSON.stringify(levelData, null, 2)], {
+    type: "application/json",
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "level.json";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+// Level laden
+document.getElementById("loadLevel").addEventListener("click", async () => {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "application/json";
+
+  input.addEventListener("change", async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const text = await file.text();
+    const levelData = JSON.parse(text);
+
+    // Level-Daten anwenden
+    player.userX = levelData.player.x;
+    player.userY = levelData.player.y;
+    player.x = levelData.player.x;
+    player.y = levelData.player.y;
+    player.userDirection = levelData.player.direction;
+
+    treasure.x = levelData.treasure.x;
+    treasure.y = levelData.treasure.y;
+
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++) {
+        map[y][x] = levelData.map[y][x];
+      }
+    }
+
+    if (levelData.code) {
+      editor.setValue(levelData.code); // Setze den gespeicherten Code in den Editor
+    }
+
+    drawGrid();
+  });
+
+  input.click();
+});
+
 import {
   move,
   noWater,
