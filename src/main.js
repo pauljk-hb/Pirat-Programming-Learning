@@ -35,6 +35,33 @@ const map = [
 // Speichere die Positionen der Kreuze
 const crosses = [];
 
+const tileSet = new Image();
+tileSet.src = "tilemap.png";
+
+console.log("tileSet", tileSet);
+
+tileSet.onload = () => {
+  drawGrid();
+};
+
+function drawTile(tileIndex, x, y) {
+  const tileSize = 50;
+  const tilesPerRow = 5; // Anzahl der Spalten im Tileset
+  const sx = (tileIndex % tilesPerRow) * tileSize;
+  const sy = Math.floor(tileIndex / tilesPerRow) * tileSize;
+  ctx.drawImage(
+    tileSet,
+    sx,
+    sy,
+    tileSize,
+    tileSize,
+    x * gridSize,
+    y * gridSize,
+    tileSize,
+    tileSize
+  );
+}
+
 function drawCross(x, y) {
   // Speichere die Position des Kreuzes, falls es noch nicht existiert
   if (!crosses.some((cross) => cross.x === x && cross.y === y)) {
@@ -81,9 +108,25 @@ function drawGrid() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
-      ctx.fillStyle = map[y][x] === 1 ? "#a3d977" : "#6fb3d2"; // Land = Grün, Wasser = Blau
-      ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
-      ctx.strokeRect(x * gridSize, y * gridSize, gridSize, gridSize);
+      drawTile(map[y][x], x, y);
+    }
+  }
+
+  ctx.strokeStyle = "black"; // Farbe der Linien
+  ctx.lineWidth = 1;
+
+  for (let i = 0; i <= Math.max(cols, rows); i++) {
+    if (i <= cols) {
+      ctx.beginPath();
+      ctx.moveTo(i * gridSize, 0);
+      ctx.lineTo(i * gridSize, rows * gridSize);
+      ctx.stroke();
+    }
+    if (i <= rows) {
+      ctx.beginPath();
+      ctx.moveTo(0, i * gridSize);
+      ctx.lineTo(cols * gridSize, i * gridSize);
+      ctx.stroke();
     }
   }
 
@@ -91,13 +134,16 @@ function drawGrid() {
   drawPlayer();
 
   // Schatz zeichnen
-  ctx.fillStyle = "gold";
-  ctx.fillRect(
-    treasure.x * gridSize,
-    treasure.y * gridSize,
-    gridSize,
-    gridSize
+  ctx.fillStyle = "red";
+  ctx.beginPath();
+  ctx.arc(
+    treasure.x * gridSize + gridSize / 2,
+    treasure.y * gridSize + gridSize / 2,
+    gridSize / 2.5,
+    0,
+    2 * Math.PI
   );
+  ctx.fill();
 
   // Kreuze zeichnen
   drawCross();
