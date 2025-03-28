@@ -4,6 +4,7 @@ import { transformUserCode } from "./codePaser.js";
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const runButton = document.getElementById("runCode");
+let codeIsRunning = false;
 
 const gridSize = 50;
 const rows = 10;
@@ -255,12 +256,23 @@ function delay(ms = 500) {
 window.delay = delay;
 
 runButton.addEventListener("click", async () => {
+  if (codeIsRunning) {
+    logAction("Code wird bereits ausgeführt...", "red");
+    return;
+  }
   await reset();
   const userCode = editor.getValue(); // User-Code holen
+
+  if (!userCode) {
+    logAction("Kein Code vorhanden", "red");
+    return;
+  }
   const transformedCode = transformUserCode(userCode); // Code transformieren
 
   try {
+    codeIsRunning = true;
     await eval(transformedCode); // Asynchronen Code ausführen
+    codeIsRunning = false;
   } catch (e) {
     logAction("Fehler im Code: " + e.message, "red");
   }

@@ -2,7 +2,14 @@ import * as acorn from "acorn";
 import * as walk from "acorn-walk";
 
 export function transformUserCode(code) {
-  const ast = acorn.parse(code, { ecmaVersion: 2020 });
+  let ast;
+  try {
+    ast = acorn.parse(code, { ecmaVersion: 2020 });
+  } catch (error) {
+    console.error("Syntaxfehler im Code:", error.message);
+    return null;
+  }
+  console.log("AST:", ast);
 
   const modifications = [];
 
