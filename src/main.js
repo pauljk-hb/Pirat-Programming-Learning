@@ -410,6 +410,7 @@ import {
   setMarker,
   setzteMarkierung,
 } from "./userFunctions.js";
+import { GameAPI } from "./GameAPI.js";
 
 // Initialisiere `userFunctions.js` mit dem Spielfeld und den Spieler-Daten
 initGame({
@@ -435,3 +436,5 @@ window.setMarker = setMarker;
 window.setzteMarkierung = setzteMarkierung;
 
 drawGrid();
+
+new GameAPI(canvas, editor, logOutput, gridSize);

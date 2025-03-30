@@ -2,8 +2,102 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="/src/scripts/game.js"></script>
+    <link rel="stylesheet" href="src/styles/style.css" />
     <title>Game</title>
   </head>
-  <body></body>
+  <body>
+    <div class="control-panel">
+      <label for="speedControl">Geschwindigkeit (ms):</label>
+      <input id="speedControl" type="range" value="5" min="1" max="10" />
+      <div>
+        <label for="level-design">Level Design:</label>
+        <label>
+          <input type="radio" name="level-design" value="player" checked />
+          PLayer
+        </label>
+        <label>
+          <input type="radio" name="level-design" value="land" />
+          Land
+        </label>
+        <label>
+          <input type="radio" name="level-design" value="water" />
+          Wasser
+        </label>
+        <label>
+          <input type="radio" name="level-design" value="treasure" />
+          Schatz
+        </label>
+      </div>
+
+      <button id="saveLevel" style="margin-left: 2rem">Level speichern</button>
+      <button id="loadLevel" style="margin-right: 4rem">Level laden</button>
+
+      <button id="rotate-btn">↷ Spieler drehen</button>
+      <button id="resetGame">Reset</button>
+    </div>
+
+    <div class="flex">
+      <div class="canvas-wraper">
+        <canvas id="gameCanvas" width="500" height="500"></canvas>
+      </div>
+      <div class="editor-wraper">
+        <div id="editor" style="width: 500px; height: 450px"></div>
+        <button id="runCode">Code ausführen</button>
+      </div>
+      <div class="function-list">
+        <h3>Verfügbare Funktionen:</h3>
+        <ul>
+          <h4>Englische Funktionsnamen:</h4>
+          <li>
+            <strong>move()</strong>: Bewegt den Spieler einen Schritt in die
+            aktuelle Richtung.
+          </li>
+          <li>
+            <strong>turnLeft()</strong>: Dreht den Spieler um 90° nach links.
+          </li>
+          <li>
+            <strong>noWater()</strong>: Prüft, ob vor dem Spieler Land (kein
+            Wasser) ist.
+          </li>
+          <li>
+            <strong>setMarker()</strong>: Setzt eine Markierung an der aktuellen
+            Position des Spielers.
+          </li>
+          <li>
+            <strong>onTreasure()</strong>: Prüft, ob der Spieler auf dem Schatz
+            steht.
+          </li>
+
+          <h4>Deutsche Funktionsnamen:</h4>
+          <li>
+            <strong>vor()</strong>: Bewegt den Spieler einen Schritt in die
+            aktuelle Richtung.
+          </li>
+          <li>
+            <strong>links()</strong>: Dreht den Spieler um 90° nach links.
+          </li>
+          <li>
+            <strong>vorneFrei()</strong>: Prüft, ob vor dem Spieler Land (kein
+            Wasser) ist.
+          </li>
+          <li>
+            <strong>setzteMarkierung()</strong>: Setzt eine Markierung an der
+            aktuellen Position des Spielers.
+          </li>
+          <li>
+            <strong>aufSchatz()</strong>: Prüft, ob der Spieler auf dem Schatz
+            steht.
+          </li>
+        </ul>
+        <p style="margin-top: 2rem">
+          Hinweis: Funktionen müssen mit der Syntax
+          <strong>function functionName() {}</strong> deklariert werden.
+        </p>
+      </div>
+    </div>
+    <div id="logOutput"></div>
+  </body>
 </html>

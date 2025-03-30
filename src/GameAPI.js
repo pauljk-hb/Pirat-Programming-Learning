@@ -1,8 +1,8 @@
-import { Renderer } from "./Renderer.js";
-import { InputHandler } from "./InputHandler.js";
-import { CodeParser } from "./CodeParser.js";
-import { LevelLoader } from "./LevelLoader.js";
-import { GameController } from "./GameController.js";
+import { Renderer } from "./core/Renderer.js";
+import { InputHandler } from "./core/InputHandler.js";
+import { CodeParser } from "./core/CodeParser.js";
+import { LevelLoader } from "./core/LevelLoader.js";
+import { GameController } from "./core/GameController.js";
 
 /**
  * Hauptklasse für die Verwaltung des Spiels.
@@ -14,13 +14,15 @@ export class GameAPI {
    * @param {object} editor - Der Code-Editor (z. B. Monaco-Editor).
    * @param {HTMLElement} logOutput - Das Log-Element für Ausgaben.
    */
-  constructor(canvas, editor, logOutput) {
+  constructor(canvas, editor, logOutput, gridSize = 50) {
+    if (!canvas || !(canvas instanceof HTMLCanvasElement)) {
+      throw new Error("Ein gültiges Canvas-Element ist erforderlich.");
+    }
     this.canvas = canvas;
     this.editor = editor;
     this.logOutput = logOutput;
 
-    // Initialisiere die Module
-    this.renderer = new Renderer(canvas, 50); // Grid-Größe: 50px
+    this.renderer = new Renderer(canvas, gridSize);
     this.codeParser = new CodeParser();
     this.levelLoader = new LevelLoader();
     this.gameController = new GameController(this.renderer);
@@ -28,6 +30,7 @@ export class GameAPI {
 
     // Standardwerte
     this.currentLevel = null;
+    console.log("GameAPI initialisiert.", this);
   }
 
   /**
