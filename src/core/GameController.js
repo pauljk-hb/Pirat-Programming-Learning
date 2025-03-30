@@ -1,13 +1,18 @@
+import { Renderer } from "./Renderer.js";
+
 /**
  * GameController-Klasse zur Verwaltung des Spielzustands und der Spiel-Logik.
  */
 export class GameController {
   /**
    * Erstellt eine neue GameController-Instanz.
-   * @param {Renderer} renderer - Der Renderer, der das Spielfeld zeichnet.
+   * @param {canvas} canvas - Das Canvas-Element für die Anzeige des Spiels.
    */
-  constructor(renderer) {
-    this.renderer = renderer;
+  constructor(canvas, gridSize = 50) {
+    if (!canvas || !(canvas instanceof HTMLCanvasElement)) {
+      throw new Error("Ein gültiges Canvas-Element ist erforderlich.");
+    }
+    this.renderer = new Renderer(canvas, gridSize);
     this.player = null;
     this.treasure = null;
     this.map = null;
@@ -34,6 +39,10 @@ export class GameController {
     this.player.y = 0;
     this.player.direction = "up";
     this.crosses = [];
+    this.renderer.drawGrid(this.map, this.player, this.treasure, this.crosses);
+  }
+
+  update() {
     this.renderer.drawGrid(this.map, this.player, this.treasure, this.crosses);
   }
 
@@ -73,6 +82,13 @@ export class GameController {
       this.player.x += 1;
     }
 
+    this.renderer.drawGrid(this.map, this.player, this.treasure, this.crosses);
+  }
+
+  turnLeft() {
+    const directions = ["up", "left", "down", "right"];
+    const currentIndex = directions.indexOf(this.player.direction);
+    this.player.direction = directions[(currentIndex + 1) % directions.length];
     this.renderer.drawGrid(this.map, this.player, this.treasure, this.crosses);
   }
 

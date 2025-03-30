@@ -1,0 +1,24 @@
+{
+  "player": {
+    "x": 3,
+    "y": 3,
+    "direction": "up"
+  },
+  "treasure": {
+    "x": 6,
+    "y": 4
+  },
+  "map": [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ],
+  "code": "let i=1\r\nwhile(!aufSchatz()){\r\n    if(vorneFrei()){\r\n        vor()\r\n    }\r\n    if(!vorneFrei()){\r\n        if(i==1){\r\n            rechts()\r\n            vor()\r\n            rechts()   \r\n        }\r\n        if(i==2){\r\n            links()\r\n            vor()\r\n            links()\r\n        }\r\n        i++\r\n    }\r\n}\r\n\r\n\r\nfunction rechts() {\r\n    links()\r\n    links()\r\n    links()\r\n}"
+}

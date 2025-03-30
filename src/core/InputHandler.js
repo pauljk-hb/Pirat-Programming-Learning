@@ -5,11 +5,11 @@ export class InputHandler {
   /**
    * Erstellt eine neue InputHandler-Instanz.
    * @param {HTMLCanvasElement} canvas - Das Canvas-Element, auf dem geklickt wird.
-   * @param {object} gameManager - Der GameManager, der den Spielzustand verwaltet.
+   * @param {object} gameController - Der gameController, der den Spielzustand verwaltet.
    */
-  constructor(canvas, gameManager) {
+  constructor(canvas, gameController) {
     this.canvas = canvas;
-    this.gameManager = gameManager;
+    this.gameController = gameController;
     this.selectedTool = "player";
     this.initEventListeners();
   }
@@ -45,27 +45,35 @@ export class InputHandler {
     const x = Math.floor((event.clientX - rect.left) / 50);
     const y = Math.floor((event.clientY - rect.top) / 50);
 
+    console.log(`Clicked on grid cell: (${x}, ${y})`);
+
     if (this.selectedTool === "player") {
-      this.gameManager.getPlayer().x = x;
-      this.gameManager.getPlayer().y = y;
+      const player = this.gameController.getPlayer();
+      player.userX = x;
+      player.x = x;
+      player.userY = y;
+      player.y = y;
+    } else if (this.selectedTool === "land") {
+      this.gameController.getMap()[y][x] = 1;
+    } else if (this.selectedTool === "water") {
+      this.gameController.getMap()[y][x] = 0;
     } else if (this.selectedTool === "treasure") {
-      this.gameManager.getTreasure().x = x;
-      this.gameManager.getTreasure().y = y;
-    } else if (this.selectedTool === "cross") {
-      this.gameManager.addCross(x, y);
+      const treasure = this.gameController.getTreasure();
+      treasure.x = x;
+      treasure.y = y;
     }
 
-    this.gameManager.resetGame();
+    this.gameController.update();
   }
 
   /**
    * Dreht den Spieler im Uhrzeigersinn.
    */
   rotatePlayer() {
-    const player = this.gameManager.getPlayer();
+    const player = this.gameController.getPlayer();
     const directions = ["up", "right", "down", "left"];
     const currentIndex = directions.indexOf(player.direction);
     player.direction = directions[(currentIndex + 1) % directions.length];
-    this.gameManager.resetGame();
+    this.gameController.update();
   }
 }

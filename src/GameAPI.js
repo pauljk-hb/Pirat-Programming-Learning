@@ -1,8 +1,9 @@
-import { Renderer } from "./core/Renderer.js";
 import { InputHandler } from "./core/InputHandler.js";
 import { CodeParser } from "./core/CodeParser.js";
 import { LevelLoader } from "./core/LevelLoader.js";
 import { GameController } from "./core/GameController.js";
+import * as UserFunctions from "./core/UserFunctions.js";
+import { Utils } from "./core/Utils.js";
 
 /**
  * Hauptklasse für die Verwaltung des Spiels.
@@ -22,11 +23,19 @@ export class GameAPI {
     this.editor = editor;
     this.logOutput = logOutput;
 
-    this.renderer = new Renderer(canvas, gridSize);
     this.codeParser = new CodeParser();
     this.levelLoader = new LevelLoader();
-    this.gameController = new GameController(this.renderer);
+    this.gameController = new GameController(this.canvas, gridSize);
     this.inputHandler = new InputHandler(canvas, this.gameController);
+    Utils.setLogOutput(logOutput);
+
+    UserFunctions.initUserFunctions(this.gameController);
+
+    Object.keys(UserFunctions).forEach((funcName) => {
+      if (funcName !== "initUserFunctions") {
+        window[funcName] = UserFunctions[funcName];
+      }
+    });
 
     // Standardwerte
     this.currentLevel = null;
@@ -42,9 +51,9 @@ export class GameAPI {
       const levelData = await this.levelLoader.loadLevel(levelFile);
       this.currentLevel = levelFile;
       this.gameController.initGame(levelData);
-      this.logAction(`Level "${levelFile}" erfolgreich geladen.`, "green");
+      Utils.logAction(`Level "${levelFile}" erfolgreich geladen.`, "green");
     } catch (error) {
-      this.logAction(`Fehler beim Laden des Levels: ${error.message}`, "red");
+      Utils.logAction(`Fehler beim Laden des Levels: ${error.message}`, "red");
     }
   }
 
@@ -54,22 +63,22 @@ export class GameAPI {
   async runUserCode() {
     const userCode = this.editor.getValue();
     if (!userCode) {
-      this.logAction("Kein Code vorhanden.", "red");
+      Utils.logAction("Kein Code vorhanden.", "red");
       return;
     }
 
     const transformedCode = this.codeParser.transformUserCode(userCode);
+    console.log("Transformierter Code:", transformedCode);
     if (!transformedCode) {
-      this.logAction("Fehler beim Transformieren des Codes.", "red");
+      Utils.logAction("Fehler beim Transformieren des Codes.", "red");
       return;
     }
 
     try {
-      this.logAction("Code wird ausgeführt...", "blue");
+      Utils.deleteLog();
       await eval(transformedCode); // Benutzer-Code ausführen
-      this.logAction("Code erfolgreich ausgeführt.", "green");
     } catch (error) {
-      this.logAction(`Fehler im Code: ${error.message}`, "red");
+      Utils.logAction(`Fehler im Code: ${error.message}`, "red");
     }
   }
 
@@ -79,25 +88,12 @@ export class GameAPI {
   resetGame() {
     if (this.currentLevel) {
       this.initGame(this.currentLevel);
-      this.logAction("Spiel zurückgesetzt.", "orange");
+      Utils.logAction("Spiel zurückgesetzt.", "orange");
     } else {
-      this.logAction(
+      Utils.logAction(
         "Kein Level geladen, das zurückgesetzt werden kann.",
         "red"
       );
     }
-  }
-
-  /**
-   * Loggt eine Aktion in das Log-Element.
-   * @param {string} action - Die Aktion, die geloggt werden soll.
-   * @param {string} [styling=""] - Optionales CSS-Styling für den Log-Eintrag.
-   */
-  logAction(action, styling = "") {
-    const logEntry = document.createElement("div");
-    logEntry.textContent = `→ ${action}`;
-    if (styling) logEntry.className = styling;
-    this.logOutput.appendChild(logEntry);
-    this.logOutput.scrollTop = this.logOutput.scrollHeight;
   }
 }

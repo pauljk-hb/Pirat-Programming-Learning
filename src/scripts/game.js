@@ -6,7 +6,6 @@ import {
   createMonacoEditor,
   registerCustomCompletionProvider,
 } from "../core/editor/monaco-config.js";
-
 import "monaco-editor/min/vs/editor/editor.main.css";
 
 const canvas = document.getElementById("gameCanvas");
@@ -16,9 +15,22 @@ const resetButton = document.getElementById("resetGame");
 
 // const urlParams = new URLSearchParams(window.location.search);
 // const levelFile = urlParams.get("level");
-
-// const gameAPI = new GameAPI(canvas, logOutput, levelFile);
+const levelFile = "level1.json";
 
 configureMonacoEnvironment();
 const editor = createMonacoEditor("editor");
 registerCustomCompletionProvider();
+
+const gameAPI = new GameAPI(canvas, editor, logOutput);
+
+gameAPI.initGame(levelFile);
+
+// Event-Listener für "Code ausführen"
+runButton.addEventListener("click", async () => {
+  await gameAPI.runUserCode();
+});
+
+// Event-Listener für "Spiel zurücksetzen"
+resetButton.addEventListener("click", () => {
+  gameAPI.resetGame();
+});

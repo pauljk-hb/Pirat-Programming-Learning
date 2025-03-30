@@ -34,10 +34,10 @@ export class CodeParser {
 
     // Verpacke den transformierten Code in eine async-Funktion
     return `
-      async function runUserCode() {
+      async function userCode() {
         ${transformedCode}
       }
-      runUserCode();
+      userCode();
     `;
   }
 

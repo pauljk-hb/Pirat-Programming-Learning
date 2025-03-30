@@ -37,6 +37,27 @@ export class Renderer {
       }
     }
 
+    this.ctx.strokeStyle = "black"; // Farbe der Linien
+    this.ctx.lineWidth = 1;
+
+    const cols = this.canvas.width / this.gridSize;
+    const rows = this.canvas.height / this.gridSize;
+
+    for (let i = 0; i <= Math.max(cols, rows); i++) {
+      if (i <= cols) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(i * this.gridSize, 0);
+        this.ctx.lineTo(i * this.gridSize, rows * this.gridSize);
+        this.ctx.stroke();
+      }
+      if (i <= rows) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, i * this.gridSize);
+        this.ctx.lineTo(cols * this.gridSize, i * this.gridSize);
+        this.ctx.stroke();
+      }
+    }
+
     this.drawTreasure(treasure);
 
     this.drawPlayer(player);
@@ -75,37 +96,38 @@ export class Renderer {
    * @param {object} player - Der Spieler mit `x`, `y` und `direction`-Eigenschaften.
    */
   drawPlayer(player) {
-    const dx = player.x * this.gridSize;
-    const dy = player.y * this.gridSize;
+    this.ctx.save();
+
+    // Setze die Position des Spielers in die Mitte des Feldes
+    this.ctx.translate(
+      player.x * this.gridSize + this.gridSize / 2,
+      player.y * this.gridSize + this.gridSize / 2
+    );
+
+    switch (player.direction) {
+      case "up":
+        this.ctx.rotate(0);
+        break;
+      case "right":
+        this.ctx.rotate(Math.PI / 2);
+        break;
+      case "down":
+        this.ctx.rotate(Math.PI);
+        break;
+      case "left":
+        this.ctx.rotate(-Math.PI / 2);
+        break;
+    }
 
     this.ctx.fillStyle = "blue";
     this.ctx.beginPath();
-    this.ctx.arc(
-      dx + this.gridSize / 2,
-      dy + this.gridSize / 2,
-      this.gridSize / 3,
-      0,
-      Math.PI * 2
-    );
+    this.ctx.moveTo(0, -this.gridSize / 3); // Spitze des Dreiecks
+    this.ctx.lineTo(-this.gridSize / 3, this.gridSize / 3); // Linke Ecke
+    this.ctx.lineTo(this.gridSize / 3, this.gridSize / 3); // Rechte Ecke
+    this.ctx.closePath();
     this.ctx.fill();
 
-    this.ctx.strokeStyle = "white";
-    this.ctx.lineWidth = 2;
-    this.ctx.beginPath();
-    if (player.direction === "up") {
-      this.ctx.moveTo(dx + this.gridSize / 2, dy + this.gridSize / 4);
-      this.ctx.lineTo(dx + this.gridSize / 2, dy + this.gridSize / 2);
-    } else if (player.direction === "right") {
-      this.ctx.moveTo(dx + (3 * this.gridSize) / 4, dy + this.gridSize / 2);
-      this.ctx.lineTo(dx + this.gridSize / 2, dy + this.gridSize / 2);
-    } else if (player.direction === "down") {
-      this.ctx.moveTo(dx + this.gridSize / 2, dy + (3 * this.gridSize) / 4);
-      this.ctx.lineTo(dx + this.gridSize / 2, dy + this.gridSize / 2);
-    } else if (player.direction === "left") {
-      this.ctx.moveTo(dx + this.gridSize / 4, dy + this.gridSize / 2);
-      this.ctx.lineTo(dx + this.gridSize / 2, dy + this.gridSize / 2);
-    }
-    this.ctx.stroke();
+    this.ctx.restore();
   }
 
   /**
@@ -116,7 +138,7 @@ export class Renderer {
     const dx = treasure.x * this.gridSize;
     const dy = treasure.y * this.gridSize;
 
-    this.ctx.fillStyle = "gold";
+    this.ctx.fillStyle = "red";
     this.ctx.beginPath();
     this.ctx.arc(
       dx + this.gridSize / 2,
