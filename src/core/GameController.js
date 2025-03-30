@@ -7,12 +7,15 @@ export class GameController {
   /**
    * Erstellt eine neue GameController-Instanz.
    * @param {canvas} canvas - Das Canvas-Element für die Anzeige des Spiels.
+   * @param {number} gridSize - Die Größe eines einzelnen Grids in Pixeln.
+   * @param {object} editor - Der Code-Editor
    */
-  constructor(canvas, gridSize = 50) {
+  constructor(canvas, gridSize = 50, editor) {
     if (!canvas || !(canvas instanceof HTMLCanvasElement)) {
       throw new Error("Ein gültiges Canvas-Element ist erforderlich.");
     }
     this.renderer = new Renderer(canvas, gridSize);
+    this.editor = editor;
     this.player = null;
     this.treasure = null;
     this.map = null;
@@ -28,6 +31,9 @@ export class GameController {
     this.treasure = levelData.treasure;
     this.map = levelData.map;
     this.crosses = [];
+    if (levelData.code) {
+      this.editor.setValue(levelData.code);
+    }
     this.renderer.drawGrid(this.map, this.player, this.treasure, this.crosses);
   }
 
@@ -56,6 +62,22 @@ export class GameController {
       this.crosses.push({ x, y });
     }
     this.renderer.drawGrid(this.map, this.player, this.treasure, this.crosses);
+  }
+
+  /**
+   * Überprüft, ob der Spieler ein Kreuz erreicht hat und entfernt es gegebenenfalls.
+   * @returns {boolean} - `true`, wenn ein Kreuz erreicht wurde, sonst `false`.
+   */
+  checkCrosses() {
+    const playerOnCrossIndex = this.crosses.findIndex(
+      (cross) => cross.x === this.player.x && cross.y === this.player.y
+    );
+
+    if (playerOnCrossIndex !== -1) {
+      return true;
+    }
+
+    return false;
   }
 
   /**

@@ -16,13 +16,89 @@ export function createMonacoEditor(containerId) {
   // Editor erstellen
   const editor = monaco.editor.create(document.getElementById(containerId), {
     language: "custom-js", // Verwenden einer Dummy-Sprache
+    theme: "beginner-friendly-light",
     suggest: {
       showWords: false, // Deaktiviert allgemeine Wortvorschläge
     },
   });
 
+  configureCustomJsHighlighting();
   return editor;
 }
+
+export function configureCustomJsHighlighting() {
+  monaco.languages.setMonarchTokensProvider("custom-js", {
+    tokenizer: {
+      root: [
+        // Schlüsselwörter (if, else, for, function, return, etc.)
+        [/\b(function|if|else|while|for|return|let|const|var)\b/, "keyword"],
+
+        // Wahrheitswerte & Null-Werte (true, false, null, undefined)
+        [/\b(true|false|null|undefined)\b/, "boolean"],
+
+        // Zahlen (0-9, auch Dezimalzahlen)
+        [/\b\d+(\.\d+)?\b/, "number"],
+
+        // Zeichenketten ("Text" oder 'Text')
+        [/".*?"|'.*?'/, "string"],
+
+        // Kommentare (// oder /* */)
+        [/\/\/.*/, "comment"],
+        [/\/\*[\s\S]*?\*\//, "comment"],
+
+        // Funktionen (z. B. move(), setMarker())
+        [
+          /\b(move|setMarker|turnLeft|noWater|onTreasure|vor|links|vorneFrei|setzteMarkierung|aufSchatz)\b(?=\()/,
+          "function",
+        ],
+
+        // Standard-Objekte (console, Math, Date, etc.)
+        [/\b(console|Math|Date|String|Array|Object)\b/, "type"],
+
+        // Variablen & Namen
+        [/[A-Za-z_$][\w$]*/, "identifier"],
+      ],
+    },
+  });
+
+  monaco.languages.setLanguageConfiguration("custom-js", {
+    comments: {
+      lineComment: "//",
+      blockComment: ["/*", "*/"],
+    },
+    brackets: [
+      ["{", "}"],
+      ["[", "]"],
+      ["(", ")"],
+    ],
+    autoClosingPairs: [
+      { open: "{", close: "}" },
+      { open: "[", close: "]" },
+      { open: "(", close: ")" },
+      { open: '"', close: '"' },
+      { open: "'", close: "'" },
+    ],
+  });
+}
+
+monaco.editor.defineTheme("beginner-friendly-light", {
+  base: "vs", // Light Mode
+  inherit: true,
+  rules: [
+    { token: "keyword", foreground: "007ACC", fontStyle: "bold" }, // Blau für Schlüsselwörter
+    { token: "boolean", foreground: "1A8F79", fontStyle: "bold" }, // Türkis für Wahrheitswerte
+    { token: "number", foreground: "9E9E9E" }, // Grau für Zahlen
+    { token: "string", foreground: "008000" }, // Grün für Strings
+    { token: "comment", foreground: "7A7A7A", fontStyle: "italic" }, // Grau für Kommentare
+    { token: "function", foreground: "D44C8A" }, // Lila für Funktionen
+    { token: "type", foreground: "B5C634" }, // Gelb für Standard-Objekte
+    { token: "identifier", foreground: "000000" }, // Schwarz für Variablen
+  ],
+  colors: {
+    "editor.background": "#FFFFFF", // Weißer Hintergrund
+    "editor.foreground": "#000000", // Schwarzer Text
+  },
+});
 
 export function registerCustomCompletionProvider() {
   monaco.languages.registerCompletionItemProvider("custom-js", {

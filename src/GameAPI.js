@@ -25,11 +25,21 @@ export class GameAPI {
 
     this.codeParser = new CodeParser();
     this.levelLoader = new LevelLoader();
-    this.gameController = new GameController(this.canvas, gridSize);
-    this.inputHandler = new InputHandler(canvas, this.gameController);
+    this.gameController = new GameController(
+      this.canvas,
+      gridSize,
+      this.editor
+    );
+    this.inputHandler = new InputHandler(
+      canvas,
+      this.gameController,
+      this.editor
+    );
     Utils.setLogOutput(logOutput);
 
     UserFunctions.initUserFunctions(this.gameController);
+
+    console.log("UserFunctions:", UserFunctions);
 
     Object.keys(UserFunctions).forEach((funcName) => {
       if (funcName !== "initUserFunctions") {

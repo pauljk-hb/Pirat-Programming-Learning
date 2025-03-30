@@ -1,3 +1,5 @@
+import { LevelLoader } from "./LevelLoader.js";
+
 /**
  * InputHandler-Klasse für die Verarbeitung von Benutzereingaben.
  */
@@ -6,11 +8,17 @@ export class InputHandler {
    * Erstellt eine neue InputHandler-Instanz.
    * @param {HTMLCanvasElement} canvas - Das Canvas-Element, auf dem geklickt wird.
    * @param {object} gameController - Der gameController, der den Spielzustand verwaltet.
+   * @param {object} editor - Der Code-Editor (z. B. Monaco-Editor).
    */
-  constructor(canvas, gameController) {
+  constructor(canvas, gameController, editor) {
+    if (!canvas || !(canvas instanceof HTMLCanvasElement)) {
+      throw new Error("Ein gültiges Canvas-Element ist erforderlich.");
+    }
     this.canvas = canvas;
+    this.editor = editor;
     this.gameController = gameController;
     this.selectedTool = "player";
+    this.levelLoader = new LevelLoader();
     this.initEventListeners();
   }
 
@@ -33,6 +41,14 @@ export class InputHandler {
 
     document.getElementById("rotate-btn").addEventListener("click", () => {
       this.rotatePlayer();
+    });
+
+    document.getElementById("saveLevel").addEventListener("click", () => {
+      this.saveLevel();
+    });
+
+    document.getElementById("loadLevel").addEventListener("click", () => {
+      this.loadLevel();
     });
   }
 
@@ -75,5 +91,29 @@ export class InputHandler {
     const currentIndex = directions.indexOf(player.direction);
     player.direction = directions[(currentIndex + 1) % directions.length];
     this.gameController.update();
+  }
+
+  /**
+   * Speichert das aktuelle Level als JSON-Datei.
+   */
+  saveLevel() {
+    const levelData = {
+      player: this.gameController.getPlayer(),
+      treasure: this.gameController.getTreasure(),
+      map: this.gameController.getMap(),
+      code: this.editor.getValue(), // Benutzer-Code aus dem Editor
+    };
+
+    this.levelLoader.saveLevel(levelData, "level.json");
+    console.log("Level gespeichert:", levelData);
+  }
+
+  /**
+   * Lädt ein Level aus einer JSON-Datei.
+   */
+  loadLevel() {
+    this.levelLoader.loadLevelFromFile().then((levelData) => {
+      this.gameController.initGame(levelData);
+    });
   }
 }

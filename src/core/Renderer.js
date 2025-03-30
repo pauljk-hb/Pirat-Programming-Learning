@@ -60,9 +60,9 @@ export class Renderer {
 
     this.drawTreasure(treasure);
 
-    this.drawPlayer(player);
-
     crosses.forEach(({ x, y }) => this.drawCross(x, y));
+
+    this.drawPlayer(player);
   }
 
   /**
@@ -156,16 +156,25 @@ export class Renderer {
    * @param {number} y - Die Y-Koordinate des Kreuzes.
    */
   drawCross(x, y) {
+    const padding = 10;
     const dx = x * this.gridSize;
     const dy = y * this.gridSize;
 
+    this.ctx.save();
+
     this.ctx.strokeStyle = "red";
-    this.ctx.lineWidth = 2;
+    this.ctx.lineWidth = 5;
+
     this.ctx.beginPath();
-    this.ctx.moveTo(dx + 5, dy + 5);
-    this.ctx.lineTo(dx + this.gridSize - 5, dy + this.gridSize - 5);
-    this.ctx.moveTo(dx + this.gridSize - 5, dy + 5);
-    this.ctx.lineTo(dx + 5, dy + this.gridSize - 5);
+    this.ctx.moveTo(dx + padding, dy + padding);
+    this.ctx.lineTo(dx + this.gridSize - padding, dy + this.gridSize - padding);
     this.ctx.stroke();
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(dx + this.gridSize - padding, dy + padding);
+    this.ctx.lineTo(dx + padding, dy + this.gridSize - padding);
+    this.ctx.stroke();
+
+    this.ctx.restore();
   }
 }
