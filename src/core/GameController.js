@@ -16,10 +16,18 @@ export class GameController {
     }
     this.renderer = new Renderer(canvas, gridSize);
     this.editor = editor;
-    this.player = null;
     this.treasure = null;
     this.map = null;
     this.crosses = [];
+
+    this.player = {
+      x: 0,
+      y: 0,
+      direction: "up",
+      userX: undefined,
+      userY: undefined,
+      userDirection: undefined,
+    };
   }
 
   /**
@@ -27,7 +35,14 @@ export class GameController {
    * @param {object} levelData - Die Daten des Levels (Karte, Spieler, Schatz).
    */
   initGame(levelData) {
-    this.player = levelData.player;
+    this.player = {
+      x: levelData.player.x,
+      y: levelData.player.y,
+      direction: levelData.player.direction,
+      userX: levelData.player.x,
+      userY: levelData.player.y,
+      userDirection: levelData.player.direction,
+    };
     this.treasure = levelData.treasure;
     this.map = levelData.map;
     this.crosses = [];
@@ -40,12 +55,14 @@ export class GameController {
   /**
    * Setzt das Spiel zurück, indem der Spieler und die Kreuze zurückgesetzt werden.
    */
-  resetGame() {
-    this.player.x = 0;
-    this.player.y = 0;
-    this.player.direction = "up";
+  reset() {
+    console.log("Before Reset", this.player);
+    this.player.x = this.player.userX;
+    this.player.y = this.player.userY;
+    this.player.direction = this.player.userDirection;
     this.crosses = [];
     this.renderer.drawGrid(this.map, this.player, this.treasure, this.crosses);
+    console.log("After Reset", this.player);
   }
 
   update() {

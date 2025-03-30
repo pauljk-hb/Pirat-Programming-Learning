@@ -7,6 +7,7 @@ import {
   registerCustomCompletionProvider,
 } from "../core/editor/monaco-config.js";
 import "monaco-editor/min/vs/editor/editor.main.css";
+import feather from "feather-icons";
 
 const canvas = document.getElementById("gameCanvas");
 const logOutput = document.getElementById("logOutput");
@@ -35,8 +36,4 @@ resetButton.addEventListener("click", () => {
   gameAPI.resetGame();
 });
 
-const stopButton = document.getElementById("stopCode");
-
-stopButton.addEventListener("click", () => {
-  gameAPI.stopUserCode();
-});
+feather.replace();

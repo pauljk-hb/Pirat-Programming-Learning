@@ -158,3 +158,15 @@ body {
   color: #333;
   font-weight: bold;
 }
+
+.feather-icon {
+  width: 16px;
+  height: 16px;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}

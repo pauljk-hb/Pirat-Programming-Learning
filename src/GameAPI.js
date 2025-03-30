@@ -86,6 +86,7 @@ export class GameAPI {
 
     try {
       Utils.deleteLog();
+      this.gameController.reset();
       await eval(transformedCode); // Benutzer-Code ausführen
     } catch (error) {
       Utils.logAction(`Fehler im Code: ${error.message}`, "red");
