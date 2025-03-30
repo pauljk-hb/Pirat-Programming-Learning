@@ -34,3 +34,9 @@ runButton.addEventListener("click", async () => {
 resetButton.addEventListener("click", () => {
   gameAPI.resetGame();
 });
+
+const stopButton = document.getElementById("stopCode");
+
+stopButton.addEventListener("click", () => {
+  gameAPI.stopUserCode();
+});

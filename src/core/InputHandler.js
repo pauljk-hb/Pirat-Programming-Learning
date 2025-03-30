@@ -33,6 +33,7 @@ export class InputHandler {
     const radioButtons = document.querySelectorAll(
       'input[name="level-design"]'
     );
+
     radioButtons.forEach((radioButton) => {
       radioButton.addEventListener("change", (event) => {
         this.selectedTool = event.target.value;

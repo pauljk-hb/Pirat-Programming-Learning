@@ -2,12 +2,15 @@ export class Utils {
   static logOutput = null;
 
   /**
-   * Verzögert die Ausführung um eine bestimmte Anzahl von Millisekunden.
-   * @param {number} ms - Die Verzögerungszeit in Millisekunden.
+   * Verzögert die Ausführung um die aktuelle Verzögerungszeit (aus dem Slider).
    * @returns {Promise<void>} - Ein Promise, das nach der Verzögerung aufgelöst wird.
    */
-  static delay(ms = 500) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+  static delay() {
+    const slider = document.getElementById("speedControl"); // Slider direkt auslesen
+    let delayTime = parseInt(slider.value);
+    delayTime = (11 - delayTime) * 100;
+    console.log("Delay time:", delayTime);
+    return new Promise((resolve) => setTimeout(resolve, delayTime));
   }
 
   /**

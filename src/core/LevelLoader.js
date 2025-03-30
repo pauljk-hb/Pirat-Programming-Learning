@@ -6,7 +6,7 @@ export class LevelLoader {
    * Erstellt eine neue LevelLoader-Instanz.
    * @param {string} basePath - Der Basis-Pfad für die Level-Dateien.
    */
-  constructor(basePath = "/public/levels/") {
+  constructor(basePath = "/levels/") {
     this.basePath = basePath; // Standardpfad für Level-Dateien
   }
 

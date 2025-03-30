@@ -106,4 +106,8 @@ export class GameAPI {
       );
     }
   }
+
+  stopUserCode() {
+    this.gameController.stopUserCode();
+  }
 }

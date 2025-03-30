@@ -52,6 +52,8 @@ export class GameController {
     this.renderer.drawGrid(this.map, this.player, this.treasure, this.crosses);
   }
 
+  stopUserCode() {}
+
   /**
    * Fügt ein Kreuz an der angegebenen Position hinzu.
    * @param {number} x - Die X-Koordinate des Kreuzes.

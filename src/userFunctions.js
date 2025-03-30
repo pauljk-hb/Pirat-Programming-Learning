@@ -35,8 +35,6 @@ function delay(ms = 500) {
 }
 
 export async function move() {
-  if (window.currentExecution?.cancelled) return;
-
   let newX = playerRef.x;
   let newY = playerRef.y;
 
@@ -73,8 +71,6 @@ export async function move() {
 }
 
 export async function noWater() {
-  if (window.currentExecution?.cancelled) return;
-
   const result = (() => {
     switch (playerRef.direction) {
       case "up":
@@ -101,8 +97,6 @@ export async function setMarker() {
 }
 
 export async function turnLeft() {
-  if (window.currentExecution?.cancelled) return;
-
   const directions = ["up", "right", "down", "left"];
   const currentIndex = directions.indexOf(playerRef.direction);
   playerRef.direction = directions[(currentIndex + 3) % 4];
