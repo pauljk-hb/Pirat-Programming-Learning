@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="src/styles/style.css" />
     <title>Game</title>
   </head>
-  <body>
+  <body class="game-body">
     <div class="control-panel">
       <label for="speedControl">Geschwindigkeit (ms):</label>
       <input id="speedControl" type="range" value="5" min="1" max="10" />
@@ -53,67 +53,64 @@
       </button>
     </div>
 
-    <div class="flex">
-      <div class="canvas-wraper">
-        <canvas id="gameCanvas" width="500" height="500"></canvas>
-      </div>
-      <div class="editor-wraper">
-        <div id="editor" style="width: 500px; height: 450px"></div>
-        <button id="runCode">
-          <i data-feather="play" class="feather-icon"></i> Code ausführen
-        </button>
-      </div>
-      <div class="function-list">
-        <h3>Verfügbare Funktionen:</h3>
-        <ul>
-          <h4>Englische Funktionsnamen:</h4>
-          <li>
-            <strong>move()</strong>: Bewegt den Spieler einen Schritt in die
-            aktuelle Richtung.
-          </li>
-          <li>
-            <strong>turnLeft()</strong>: Dreht den Spieler um 90° nach links.
-          </li>
-          <li>
-            <strong>noWater()</strong>: Prüft, ob vor dem Spieler Land (kein
-            Wasser) ist.
-          </li>
-          <li>
-            <strong>setMarker()</strong>: Setzt eine Markierung an der aktuellen
-            Position des Spielers.
-          </li>
-          <li>
-            <strong>onTreasure()</strong>: Prüft, ob der Spieler auf dem Schatz
-            steht.
-          </li>
-
-          <h4>Deutsche Funktionsnamen:</h4>
-          <li>
-            <strong>vor()</strong>: Bewegt den Spieler einen Schritt in die
-            aktuelle Richtung.
-          </li>
-          <li>
-            <strong>links()</strong>: Dreht den Spieler um 90° nach links.
-          </li>
-          <li>
-            <strong>vorneFrei()</strong>: Prüft, ob vor dem Spieler Land (kein
-            Wasser) ist.
-          </li>
-          <li>
-            <strong>setzteMarkierung()</strong>: Setzt eine Markierung an der
-            aktuellen Position des Spielers.
-          </li>
-          <li>
-            <strong>aufSchatz()</strong>: Prüft, ob der Spieler auf dem Schatz
-            steht.
-          </li>
-        </ul>
-        <p style="margin-top: 2rem">
-          Hinweis: Funktionen müssen mit der Syntax
-          <strong>function functionName() {}</strong> deklariert werden.
-        </p>
-      </div>
+    <div class="canvas-wraper">
+      <canvas id="gameCanvas" width="500" height="500"></canvas>
     </div>
+    <div class="editor-wraper">
+      <div id="editor" style="height: 100%"></div>
+      <button id="runCode">
+        <i data-feather="play" class="feather-icon"></i> Code ausführen
+      </button>
+    </div>
+    <div class="function-list">
+      <h3>Verfügbare Funktionen:</h3>
+      <ul>
+        <h4>Englische Funktionsnamen:</h4>
+        <li>
+          <strong>move()</strong>: Bewegt den Spieler einen Schritt in die
+          aktuelle Richtung.
+        </li>
+        <li>
+          <strong>turnLeft()</strong>: Dreht den Spieler um 90° nach links.
+        </li>
+        <li>
+          <strong>noWater()</strong>: Prüft, ob vor dem Spieler Land (kein
+          Wasser) ist.
+        </li>
+        <li>
+          <strong>setMarker()</strong>: Setzt eine Markierung an der aktuellen
+          Position des Spielers.
+        </li>
+        <li>
+          <strong>onTreasure()</strong>: Prüft, ob der Spieler auf dem Schatz
+          steht.
+        </li>
+
+        <h4>Deutsche Funktionsnamen:</h4>
+        <li>
+          <strong>vor()</strong>: Bewegt den Spieler einen Schritt in die
+          aktuelle Richtung.
+        </li>
+        <li><strong>links()</strong>: Dreht den Spieler um 90° nach links.</li>
+        <li>
+          <strong>vorneFrei()</strong>: Prüft, ob vor dem Spieler Land (kein
+          Wasser) ist.
+        </li>
+        <li>
+          <strong>setzteMarkierung()</strong>: Setzt eine Markierung an der
+          aktuellen Position des Spielers.
+        </li>
+        <li>
+          <strong>aufSchatz()</strong>: Prüft, ob der Spieler auf dem Schatz
+          steht.
+        </li>
+      </ul>
+      <p style="margin-top: 2rem">
+        Hinweis: Funktionen müssen mit der Syntax
+        <strong>function functionName() {}</strong> deklariert werden.
+      </p>
+    </div>
+
     <div id="logOutput"></div>
   </body>
 </html>

@@ -17,6 +17,7 @@ export function createMonacoEditor(containerId) {
   const editor = monaco.editor.create(document.getElementById(containerId), {
     language: "custom-js", // Verwenden einer Dummy-Sprache
     theme: "beginner-friendly-light",
+    automaticLayout: true,
     suggest: {
       showWords: false, // Deaktiviert allgemeine Wortvorschläge
     },

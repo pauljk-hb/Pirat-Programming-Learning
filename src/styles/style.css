@@ -8,7 +8,6 @@
 }
 
 body {
-  padding: 3rem 5rem;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -41,7 +40,6 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1.5rem;
   padding: 1rem;
   border: 1px solid #ccc;
 }
@@ -77,10 +75,13 @@ body {
 #logOutput {
   border: 1px solid #ccc;
   padding: 10px;
-  height: 200px;
   overflow-y: auto;
-  color: #0056b3;
   font-weight: 700;
+  color: #0056b3;
+
+  div {
+    margin-bottom: 5px;
+  }
 }
 
 /* Styling für die Radio-Buttons und Labels */
