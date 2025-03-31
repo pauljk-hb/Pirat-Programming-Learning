@@ -88,7 +88,7 @@ monaco.editor.defineTheme("beginner-friendly-light", {
   rules: [
     { token: "keyword", foreground: "007ACC", fontStyle: "bold" }, // Blau für Schlüsselwörter
     { token: "boolean", foreground: "1A8F79", fontStyle: "bold" }, // Türkis für Wahrheitswerte
-    { token: "number", foreground: "9E9E9E" }, // Grau für Zahlen
+    { token: "number", foreground: "686868" }, // Grau für Zahlen
     { token: "string", foreground: "008000" }, // Grün für Strings
     { token: "comment", foreground: "7A7A7A", fontStyle: "italic" }, // Grau für Kommentare
     { token: "function", foreground: "D44C8A" }, // Lila für Funktionen
@@ -139,7 +139,7 @@ export function registerCustomCompletionProvider() {
             monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
         },
         {
-          label: "Function deklaration",
+          label: "Function",
           kind: monaco.languages.CompletionItemKind.Snippet,
           documentation: "Create a function",
           insertText: "function ${1:functionName}(${2:params}) {\n\t$0\n}",
@@ -209,6 +209,18 @@ export function registerCustomCompletionProvider() {
           kind: monaco.languages.CompletionItemKind.Function,
           documentation: "Prüft, ob der Spieler auf dem Schatz steht.",
           insertText: "aufSchatz()",
+        },
+        {
+          label: "true",
+          kind: monaco.languages.CompletionItemKind.Keyword,
+          documentation: "Boolean value representing true",
+          insertText: "true",
+        },
+        {
+          label: "false",
+          kind: monaco.languages.CompletionItemKind.Keyword,
+          documentation: "Boolean value representing false",
+          insertText: "false",
         },
       ];
       return { suggestions };

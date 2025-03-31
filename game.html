@@ -10,7 +10,7 @@
   </head>
   <body class="game-body">
     <div class="control-panel">
-      <label for="speedControl">Geschwindigkeit (ms):</label>
+      <label for="speedControl">Geschwindigkeit:</label>
       <input id="speedControl" type="range" value="5" min="1" max="10" />
       <div>
         <label for="level-design">Level Design:</label>
@@ -29,10 +29,6 @@
         <label>
           <input type="radio" name="level-design" value="treasure" />
           Schatz
-        </label>
-        <label>
-          <input type="radio" name="level-design" value="cross" />
-          Kreuz
         </label>
       </div>
 
@@ -75,7 +71,8 @@
         </li>
         <li>
           <strong>noWater()</strong>: Prüft, ob vor dem Spieler Land (kein
-          Wasser) ist.
+          Wasser) ist. <code>true</code>, wenn Land vor dem Spieler ist, sonst
+          <code>false</code>.
         </li>
         <li>
           <strong>setMarker()</strong>: Setzt eine Markierung an der aktuellen
@@ -83,7 +80,13 @@
         </li>
         <li>
           <strong>onTreasure()</strong>: Prüft, ob der Spieler auf dem Schatz
-          steht.
+          steht. <code>true</code>, wenn auf dem Schatz, sonst
+          <code>false</code>.
+        </li>
+        <li>
+          <strong>onMarker()</strong>: Prüft, ob der Spieler auf einer
+          Markierung steht. <code>true</code>, wenn auf Markierung, sonst
+          <code>false</code>.
         </li>
 
         <h4>Deutsche Funktionsnamen:</h4>
@@ -94,7 +97,8 @@
         <li><strong>links()</strong>: Dreht den Spieler um 90° nach links.</li>
         <li>
           <strong>vorneFrei()</strong>: Prüft, ob vor dem Spieler Land (kein
-          Wasser) ist.
+          Wasser) ist. <code>true</code>, wenn Land vor dem Spieler ist, sonst
+          <code>false</code>.
         </li>
         <li>
           <strong>setzteMarkierung()</strong>: Setzt eine Markierung an der
@@ -102,7 +106,13 @@
         </li>
         <li>
           <strong>aufSchatz()</strong>: Prüft, ob der Spieler auf dem Schatz
-          steht.
+          steht. <code>true</code>, wenn auf dem Schatz, sonst
+          <code>false</code>.
+        </li>
+        <li>
+          <strong>aufMarkierung()</strong>: Prüft, ob der Spieler auf einer
+          Markierung steht. <code>true</code>, wenn auf Markierung, sonst
+          <code>false</code>.
         </li>
       </ul>
       <p style="margin-top: 2rem">

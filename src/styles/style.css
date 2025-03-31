@@ -113,6 +113,13 @@ body {
   color: #007bff; /* Farbe des Labels, wenn ausgewählt */
 }
 
+code {
+  background-color: #ececec;
+  padding: 0.06rem 0.2rem;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
 .green {
   color: green;
 }
@@ -152,7 +159,7 @@ body {
 .function-list li {
   font-size: 1rem;
   color: #555;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .function-list li strong {
