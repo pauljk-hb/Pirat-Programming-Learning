@@ -1,4 +1,5 @@
 import { Renderer } from "./Renderer.js";
+import { Utils } from "./Utils.js";
 
 /**
  * GameController-Klasse zur Verwaltung des Spielzustands und der Spiel-Logik.
@@ -33,8 +34,9 @@ export class GameController {
   /**
    * Initialisiert das Spiel mit den Level-Daten.
    * @param {object} levelData - Die Daten des Levels (Karte, Spieler, Schatz).
+   * @param {string} levelName - Der Name des Levels.
    */
-  initGame(levelData) {
+  initGame(levelData, levelName) {
     this.player = {
       x: levelData.player.x,
       y: levelData.player.y,
@@ -46,8 +48,12 @@ export class GameController {
     this.treasure = levelData.treasure;
     this.map = levelData.map;
     this.crosses = [];
-    if (levelData.code) {
-      this.editor.setValue(levelData.code);
+    if (Utils.loadFromStorage(`${levelName}-userCode`)) {
+      this.editor.setValue(Utils.loadFromStorage(`${levelName}-userCode`));
+    } else {
+      if (levelData.code) {
+        this.editor.setValue(levelData.code);
+      }
     }
     this.renderer.drawGrid(this.map, this.player, this.treasure, this.crosses);
   }

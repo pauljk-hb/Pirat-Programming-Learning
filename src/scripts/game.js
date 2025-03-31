@@ -8,6 +8,7 @@ import {
 } from "../core/editor/monaco-config.js";
 import "monaco-editor/min/vs/editor/editor.main.css";
 import feather from "feather-icons";
+import { Utils } from "../core/Utils.js";
 
 const canvas = document.getElementById("gameCanvas");
 const logOutput = document.getElementById("logOutput");
@@ -34,6 +35,12 @@ runButton.addEventListener("click", async () => {
 // Event-Listener für "Spiel zurücksetzen"
 resetButton.addEventListener("click", () => {
   gameAPI.resetGame();
+});
+
+// Speichert den aktuellen Code im Local Storage, wenn der Editor geändert wird
+editor.onDidChangeModelContent(() => {
+  const currentCode = editor.getValue();
+  Utils.saveToStorage(`${levelFile}-userCode`, currentCode);
 });
 
 feather.replace();

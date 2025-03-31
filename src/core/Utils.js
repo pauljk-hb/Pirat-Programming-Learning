@@ -100,11 +100,48 @@ export class Utils {
     this.logOutput.scrollTop = this.logOutput.scrollHeight;
   }
 
+  /**
+   * Löscht den Inhalt des Log-Elements.
+   */
   static deleteLog() {
     if (this.logOutput) {
       this.logOutput.innerHTML = ""; // Löscht den Inhalt des Log-Elements
     } else {
       console.warn("Log-Element nicht gefunden.");
     }
+  }
+
+  /**
+   * Speichert einen Wert im Local Storage.
+   * @param {string} key - Der Schlüssel, unter dem der Wert gespeichert werden soll.
+   * @param {string} value - Der Wert, der gespeichert werden soll.
+   */
+  static saveToStorage(key, value) {
+    localStorage.setItem(key, value);
+  }
+
+  /**
+   * Lädt einen Wert aus dem Local Storage.
+   * @param {string} key - Der Schlüssel, unter dem der Wert gespeichert ist.
+   * @return {string|null} - Der gespeicherte Wert oder `null`, wenn nicht gefunden.
+   */
+  static loadFromStorage(key) {
+    return localStorage.getItem(key);
+  }
+
+  /**
+   * Löscht den gesamten Local Storage.
+   */
+  static clearStorage() {
+    localStorage.clear();
+  }
+
+  /**
+   * Löscht einen bestimmten Schlüssel aus dem Local Storage.
+   * @param {string} key - Der Schlüssel, der gelöscht werden soll.
+   */
+
+  static removeFromStorage(key) {
+    localStorage.removeItem(key);
   }
 }

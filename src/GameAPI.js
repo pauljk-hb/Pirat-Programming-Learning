@@ -61,7 +61,7 @@ export class GameAPI {
     try {
       const levelData = await this.levelLoader.loadLevel(levelFile);
       this.currentLevel = levelFile;
-      this.gameController.initGame(levelData);
+      this.gameController.initGame(levelData, levelFile);
       Utils.logAction(`Level "${levelFile}" erfolgreich geladen.`, "green");
     } catch (error) {
       Utils.logAction(`Fehler beim Laden des Levels: ${error.message}`, "red");
@@ -106,6 +106,7 @@ export class GameAPI {
    */
   resetGame() {
     if (this.currentLevel) {
+      Utils.removeFromStorage(`${this.currentLevel}-userCode`);
       this.initGame(this.currentLevel);
       Utils.logAction("Spiel zurückgesetzt.", "orange");
     } else {
