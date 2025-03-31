@@ -22,6 +22,7 @@ export class GameAPI {
     this.canvas = canvas;
     this.editor = editor;
     this.logOutput = logOutput;
+    this.codeRunning = false;
 
     this.codeParser = new CodeParser();
     this.levelLoader = new LevelLoader();
@@ -77,6 +78,10 @@ export class GameAPI {
       return;
     }
 
+    if (this.codeRunning) {
+      return;
+    }
+
     const transformedCode = this.codeParser.transformUserCode(userCode);
     console.log("Transformierter Code:", transformedCode);
     if (!transformedCode) {
@@ -86,10 +91,13 @@ export class GameAPI {
 
     try {
       Utils.deleteLog();
+      this.codeRunning = true;
       this.gameController.reset();
       await eval(transformedCode); // Benutzer-Code ausführen
     } catch (error) {
       Utils.logAction(`Fehler im Code: ${error.message}`, "red");
+    } finally {
+      this.codeRunning = false;
     }
   }
 
