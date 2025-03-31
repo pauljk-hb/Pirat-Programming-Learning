@@ -16,9 +16,10 @@ const runButton = document.getElementById("runCode");
 const resetButton = document.getElementById("resetGame");
 const instructionParent = document.getElementById("instructions");
 
-// const urlParams = new URLSearchParams(window.location.search);
-// const levelFile = urlParams.get("level");
-const levelFile = "level2.json";
+const urlParams = new URLSearchParams(window.location.search);
+const levelFile = urlParams.get("level");
+console.log("Level-File:", levelFile);
+//const levelFile = "level2.json";
 
 configureMonacoEnvironment();
 const editor = createMonacoEditor("editor");

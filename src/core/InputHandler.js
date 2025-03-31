@@ -103,6 +103,7 @@ export class InputHandler {
       treasure: this.gameController.getTreasure(),
       map: this.gameController.getMap(),
       code: this.editor.getValue(), // Benutzer-Code aus dem Editor
+      preview: this.canvas.toDataURL("image/png"),
     };
 
     this.levelLoader.saveLevel(levelData, "level.json");
