@@ -30,6 +30,11 @@
           <input type="radio" name="level-design" value="treasure" />
           Schatz
         </label>
+
+        <button id="rotate-btn">
+          <i data-feather="corner-right-down" class="feather-icon"></i> Spieler
+          drehen
+        </button>
       </div>
 
       <button id="saveLevel" style="margin-left: 2rem">
@@ -39,10 +44,6 @@
         <i data-feather="upload" class="feather-icon"></i>Level laden
       </button>
 
-      <button id="rotate-btn">
-        <i data-feather="corner-right-down" class="feather-icon"></i> Spieler
-        drehen
-      </button>
       <!-- <button id="stopCode">Code stoppen</button> -->
       <button id="resetGame">
         <i data-feather="rotate-ccw" class="feather-icon"></i>Reset Level
@@ -58,7 +59,7 @@
         <i data-feather="play" class="feather-icon"></i> Code ausführen
       </button>
     </div>
-    <div class="function-list">
+    <div class="function-list" id="instructions">
       <h3>Verfügbare Funktionen:</h3>
       <ul>
         <h4>Englische Funktionsnamen:</h4>

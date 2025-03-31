@@ -63,6 +63,7 @@ export class GameAPI {
       this.currentLevel = levelFile;
       this.gameController.initGame(levelData, levelFile);
       Utils.logAction(`Level "${levelFile}" erfolgreich geladen.`, "green");
+      return levelData.instructions;
     } catch (error) {
       Utils.logAction(`Fehler beim Laden des Levels: ${error.message}`, "red");
     }

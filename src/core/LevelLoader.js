@@ -29,6 +29,22 @@ export class LevelLoader {
     }
   }
 
+  /**
+   * Gibt alle Level-Dateien im angegebenen Verzeichnis zurück.
+   * @param {string[]} levelFiles - Ein Array von Level-Dateinamen.
+   * @returns {Promise<string[]>} - Ein Promise, das ein Array von Level-Dateinamen zurückgibt.
+   */
+  async loadAllLevel(levelFiles) {
+    const levelPromises = levelFiles.map((file) => this.loadLevel(file));
+    try {
+      const levels = await Promise.all(levelPromises);
+      return levels;
+    } catch (error) {
+      console.error("Fehler beim Laden der Level:", error.message);
+      throw error;
+    }
+  }
+
   async loadLevelFromFile() {
     try {
       const fileInput = document.createElement("input");

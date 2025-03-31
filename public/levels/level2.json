@@ -1,0 +1,29 @@
+{
+  "titel": "Level 2",
+  "player": {
+    "x": 7,
+    "y": 6,
+    "direction": "up",
+    "userX": 7,
+    "userY": 6,
+    "userDirection": "up"
+  },
+  "treasure": {
+    "x": 6,
+    "y": 4
+  },
+  "map": [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ],
+  "code": "let i=1\r\nwhile(!aufSchatz()){\r\n    if(vorneFrei()){\r\n        vor()\r\n    }\r\n    if(!vorneFrei()){\r\n        if(i==1){\r\n            rechts()\r\n            vor()\r\n            rechts()   \r\n        }\r\n        if(i==2){\r\n            links()\r\n            vor()\r\n            links()\r\n        }\r\n        i++\r\n    }\r\n}\r\n\r\n\r\nfunction rechts() {\r\n    links()\r\n    links()\r\n    links()\r\n}",
+  "instructions": "<h3>Anleitung</h3>\n<p>Hier sind einige wichtige Befehle und Konzepte:</p>\n<ul>\n  <li><strong>if-Bedingung:</strong> <code>if (Bedingung) { ... }</code> prüft, ob eine Bedingung erfüllt ist.</li>\n  <li><strong>while-Schleife:</strong> <code>while (Bedingung) { ... }</code> wiederholt den Code, solange die Bedingung wahr ist.</li>\n  <li><strong>vor()</strong> – Bewegt den Spieler ein Feld nach vorne.</li>\n  <li><strong>links()</strong> – Dreht den Spieler um 90° nach links.</li>\n  <li><strong>rechts()</strong> – Dreht den Spieler um 90° nach rechts (ist als 3x <code>links()</code> definiert).</li>\n  <li><strong>aufSchatz()</strong> – Gibt <code>true</code> zurück, wenn der Spieler den Schatz erreicht hat.</li>\n  <li><strong>vorneFrei()</strong> – Prüft, ob das Feld vor dem Spieler frei ist.</li>\n</ul>"
+}

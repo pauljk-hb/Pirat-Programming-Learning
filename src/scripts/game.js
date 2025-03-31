@@ -14,10 +14,11 @@ const canvas = document.getElementById("gameCanvas");
 const logOutput = document.getElementById("logOutput");
 const runButton = document.getElementById("runCode");
 const resetButton = document.getElementById("resetGame");
+const instructionParent = document.getElementById("instructions");
 
 // const urlParams = new URLSearchParams(window.location.search);
 // const levelFile = urlParams.get("level");
-const levelFile = "level1.json";
+const levelFile = "level2.json";
 
 configureMonacoEnvironment();
 const editor = createMonacoEditor("editor");
@@ -25,7 +26,11 @@ registerCustomCompletionProvider();
 
 const gameAPI = new GameAPI(canvas, editor, logOutput);
 
-gameAPI.initGame(levelFile);
+const instruktions = await gameAPI.initGame(levelFile);
+console.log("Instruktions:", instruktions);
+if (instruktions && instruktions.length > 0) {
+  instructionParent.innerHTML = instruktions;
+}
 
 // Event-Listener für "Code ausführen"
 runButton.addEventListener("click", async () => {
