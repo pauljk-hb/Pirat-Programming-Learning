@@ -1,14 +1,15 @@
-/* filepath: i:\Dokumente\Projekte\pirat-programming\src\styles\home.css */
+.home-body {
+  padding: 3rem 17rem;
+}
 
 /* General styling for the level management section */
 .level-management {
   font-family: Arial, sans-serif;
-  max-width: 70em;
-  margin: 3rem auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
+  margin-top: 2rem;
 }
 
 /* Styling for the level list container */

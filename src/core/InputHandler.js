@@ -48,8 +48,8 @@ export class InputHandler {
       this.saveLevel();
     });
 
-    document.getElementById("loadLevel").addEventListener("click", () => {
-      this.loadLevel();
+    document.getElementById("loadLevel").addEventListener("click", async () => {
+      await this.loadLevel();
     });
   }
 
@@ -91,6 +91,7 @@ export class InputHandler {
     const directions = ["up", "right", "down", "left"];
     const currentIndex = directions.indexOf(player.direction);
     player.direction = directions[(currentIndex + 1) % directions.length];
+    player.userDirection = player.direction;
     this.gameController.update();
   }
 
@@ -113,9 +114,16 @@ export class InputHandler {
   /**
    * Lädt ein Level aus einer JSON-Datei.
    */
-  loadLevel() {
-    this.levelLoader.loadLevelFromFile().then((levelData) => {
-      this.gameController.initGame(levelData);
-    });
+  async loadLevel() {
+    const levelData = await this.levelLoader.loadLevelFromFile("level.json");
+    if (!levelData) {
+      console.error("Fehler beim Laden des Levels.");
+      return;
+    }
+    this.gameController.initGame(
+      levelData.map,
+      levelData.player,
+      levelData.treasure
+    );
   }
 }

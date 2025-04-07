@@ -37,6 +37,12 @@ export class Renderer {
       }
     }
 
+    this.drawTreasure(treasure);
+
+    crosses.forEach(({ x, y }) => this.drawCross(x, y));
+
+    this.drawPlayer(player);
+
     this.ctx.strokeStyle = "black"; // Farbe der Linien
     this.ctx.lineWidth = 1;
 
@@ -57,12 +63,6 @@ export class Renderer {
         this.ctx.stroke();
       }
     }
-
-    this.drawTreasure(treasure);
-
-    crosses.forEach(({ x, y }) => this.drawCross(x, y));
-
-    this.drawPlayer(player);
   }
 
   /**
@@ -96,38 +96,41 @@ export class Renderer {
    * @param {object} player - Der Spieler mit `x`, `y` und `direction`-Eigenschaften.
    */
   drawPlayer(player) {
-    this.ctx.save();
+    const tileSize = 50;
+    const dx = player.x * this.gridSize;
+    const dy = player.y * this.gridSize;
 
-    // Setze die Position des Spielers in die Mitte des Feldes
-    this.ctx.translate(
-      player.x * this.gridSize + this.gridSize / 2,
-      player.y * this.gridSize + this.gridSize / 2
-    );
+    // Spalte 2 im Tileset (Spieler)
+    const sx = tileSize * 2;
+    let sy = 0;
 
+    // Richtung zu Zeile im Tileset
     switch (player.direction) {
-      case "up":
-        this.ctx.rotate(0);
-        break;
-      case "right":
-        this.ctx.rotate(Math.PI / 2);
-        break;
       case "down":
-        this.ctx.rotate(Math.PI);
+        sy = tileSize * 0;
         break;
       case "left":
-        this.ctx.rotate(-Math.PI / 2);
+        sy = tileSize * 1;
+        break;
+      case "right":
+        sy = tileSize * 2;
+        break;
+      case "up":
+        sy = tileSize * 3;
         break;
     }
 
-    this.ctx.fillStyle = "blue";
-    this.ctx.beginPath();
-    this.ctx.moveTo(0, -this.gridSize / 3); // Spitze des Dreiecks
-    this.ctx.lineTo(-this.gridSize / 3, this.gridSize / 3); // Linke Ecke
-    this.ctx.lineTo(this.gridSize / 3, this.gridSize / 3); // Rechte Ecke
-    this.ctx.closePath();
-    this.ctx.fill();
-
-    this.ctx.restore();
+    this.ctx.drawImage(
+      this.tileSet,
+      sx,
+      sy,
+      tileSize,
+      tileSize,
+      dx,
+      dy,
+      this.gridSize,
+      this.gridSize
+    );
   }
 
   /**

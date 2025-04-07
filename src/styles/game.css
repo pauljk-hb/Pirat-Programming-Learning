@@ -17,9 +17,89 @@
 .editor-wraper {
   grid-area: 2 / 2 / 4 / 3;
 }
-.function-list {
+.level-instructions {
   grid-area: 2 / 3 / 4 / 4;
 }
 #logOutput {
   grid-area: 3 / 1 / 4 / 2;
+}
+
+/* Styling für die Level-Anweisungen (level.instructions) */
+.level-instructions {
+  padding: 1.5rem;
+  border: 1px solid #ccc;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  overflow-y: auto;
+}
+
+.level-instructions h3 {
+  font-size: 1.8rem;
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+.level-instructions p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.level-instructions ul {
+  list-style-type: disc;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.level-instructions ol {
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.level-instructions ul li {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.level-instructions ol li {
+  margin-bottom: 0.8rem;
+}
+
+.level-instructions pre {
+  background-color: #ececec;
+  padding: 0.8rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.level-instructions pre code {
+  background-color: #ececec;
+}
+
+.level-instructions code {
+  background-color: #e8f0fe;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: #d63384;
+}
+
+.level-instructions h4 {
+  font-size: 1.4rem;
+  color: #333;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.level-instructions a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.level-instructions a:hover {
+  text-decoration: underline;
 }

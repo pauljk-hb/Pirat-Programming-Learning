@@ -1,12 +1,16 @@
 import { LevelLoader } from "../core/LevelLoader.js";
 
 const levelList = document.getElementById("levelList");
-const uploadForm = document.getElementById("uploadForm");
-const levelFileInput = document.getElementById("levelFile");
 
 const levelLoader = new LevelLoader();
 
-const levelFiles = ["level1.json", "level2.json"];
+const levelFiles = [
+  "level1.json",
+  "level2.json",
+  "level3.json",
+  "level4.json",
+  "level5.json",
+];
 
 levelLoader.loadAllLevel(levelFiles).then((levels) => {
   console.log("Alle Level geladen:", levels);

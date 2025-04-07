@@ -1,0 +1,29 @@
+{
+  "titel": "Level 5: Funktionen mit Rückgabewerten",
+  "player": {
+    "x": 2,
+    "y": 2,
+    "direction": "right",
+    "userX": 2,
+    "userY": 2,
+    "userDirection": "right"
+  },
+  "treasure": {
+    "x": 8,
+    "y": 8
+  },
+  "map": [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 0, 0, 0, 1, 1, 1, 0],
+    [0, 1, 1, 0, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 0, 1, 0, 0, 0, 1, 0],
+    [0, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ],
+  "instructions": "<h3>Willkommen zu Level 5!</h3>\n<p>In diesem Level lernst du, wie du eigene Funktionen mit Rückgabewerten (<strong>return</strong>) erstellst. Funktionen mit Rückgabewerten sind nützlich, um Berechnungen durchzuführen oder Informationen zurückzugeben, die du im weiteren Code verwenden kannst.</p>\n<h4>Was ist ein Rückgabewert?</h4>\n<p>Ein Rückgabewert ist das Ergebnis, das eine Funktion zurückgibt, wenn sie aufgerufen wird. Du kannst diesen Wert in deinem Code verwenden, um Entscheidungen zu treffen oder weitere Aktionen auszuführen.</p>\n<p>Hier ist ein Beispiel:</p>\n<pre><code>function addiere(a, b) {\n  return a + b;\n}\n\nlet ergebnis = addiere(3, 5);\nconsole.log(ergebnis); // Gibt 8 aus</code></pre>\n<h4>Deine Aufgabe:</h4>\n<p>Schreibe eine Funktion <strong>istSchatzErreicht()</strong>, die überprüft, ob der Spieler auf dem Schatz steht. Die Funktion soll <code>true</code> zurückgeben, wenn der Spieler auf dem Schatz steht, und <code>false</code>, wenn nicht.</p>\n<p>Hier ist ein Beispiel, wie die Funktion aussehen könnte:</p>\n<pre><code>function istSchatzErreicht() {\n  if (aufSchatz()) {\n    return true;\n  } else {\n    return false;\n  }\n}</code></pre>\n<p>Verwende die Funktion in deinem Code, um zu überprüfen, ob der Spieler den Schatz erreicht hat. Wenn ja, gib eine Nachricht im Log aus.</p>\n<h4>Wie schreibe und führe ich Code aus?</h4>\n<ol>\n  <li>Öffne den Code-Editor und schreibe die Funktion <strong>istSchatzErreicht()</strong>. Verwende sie in deinem Code, um den Schatz zu erreichen.</li>\n  <li>Klicke auf den \"Code ausführen\"-Button, um den Code auszuführen. Der Spieler wird die Befehle Schritt für Schritt ausführen.</li>\n  <li>Wenn der Spieler nicht den Schatz erreicht, überprüfe deinen Code und passe ihn an. Programmieren bedeutet oft, Dinge auszuprobieren und zu verbessern!</li>\n</ol>\n<p>Viel Erfolg!</p>",
+  "preview": ""
+}

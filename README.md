@@ -1,74 +1,103 @@
 # Pirat Programming
 
-Dieses Projekt wurde mit [Vite](https://vitejs.dev/) erstellt und bietet eine interaktive Umgebung, um Programmierlogik spielerisch zu erlernen.
+Ein interaktives Projekt, das spielerisch Programmierlogik vermittelt. Entwickelt mit [Vite](https://vitejs.dev/) für schnelle und moderne Webentwicklung. Es basiert auf der Idee des Hamstersimulators.
 
-## 🚀 Installation & Start
+## 🚀 Schnellstart
 
-### 1. Repository klonen
+### Installation
+
+1. **Repository klonen**:
 
 ```sh
 git clone <repository-url>
 cd pirat-programming
 ```
 
-### 2. Abhängigkeiten installieren
+2. **Abhängigkeiten installieren**:
 
 ```sh
 npm install
 ```
 
-### 3. Entwicklung starten
+3. **Entwicklung starten**:
 
 ```sh
 npm run dev
 ```
 
-## 📦 Produktion bauen
+4. **Produktion bauen**:
 
 ```sh
 npm run build
 ```
 
-## 🕹️ Features
+## 🕹️ Benutzerbefehle
 
-- **Interaktives Spielfeld**: Erstelle und bearbeite Level mit einem visuellen Editor.
-- **Code-Editor**: Schreibe und führe JavaScript-Code direkt im Browser aus.
-- **Lernfunktionen**: Nutze vordefinierte Funktionen wie `move()`, `turnLeft()`, `noWater()` und mehr, um den Spieler zu steuern.
-- **Level speichern und laden**: Speichere deine Level als JSON-Dateien und lade sie später wieder.
+- **`move()` / `vor()`**: Bewegt den Spieler einen Schritt vorwärts.
+- **`turnLeft()` / `links()`**: Dreht den Spieler um 90° nach links.
+- **`noWater()` / `vorneFrei()`**: Prüft, ob vor dem Spieler Land ist.
+- **`setMarker()` / `setzteMarkierung()`**: Setzt eine Markierung.
+- **`onTreasure()` / `aufSchatz()`**: Prüft, ob der Spieler auf einem Schatz steht.
+
+## 📂 Projektstruktur
+
+Das Projekt ist in verschiedene Verzeichnisse und Dateien unterteilt, um die Entwicklung und Wartung zu erleichtern:
+
+### Hauptverzeichnisse
+
+- **`src/`**: Hauptverzeichnis des Quellcodes.
+
+  - **`core/`**: Enthält die Kernlogik des Spiels.
+    - **`GameController.js`**: Verwalten des Spielzustands, der Spiellogik und der Interaktionen.
+    - **`Renderer.js`**: Zeichnet das Spielfeld, den Spieler, den Schatz und andere Elemente.
+    - **`LevelLoader.js`**: Laden und Speichern von Level-Daten.
+    - **`Utils.js`**: Hilfsfunktionen wie Logging, Verzögerungen und Speicheroperationen.
+    - **`InputHandler.js`**: Verarbeitet Benutzereingaben wie Klicks und Tastendrücke.
+    - **`editor/`**: Konfiguration und Integration des Monaco Editors.
+      - **`monaco-config.js`**: Anpassung des Editors (z. B. Syntax-Highlighting, Autovervollständigung).
+      - **`monaco-worker-loader.js`**: Lädt die Monaco-Worker für verschiedene Sprachen.
+  - **`scripts/`**: Enthält die Hauptskripte für die Startseite und das Spiel.
+    - **`home.js`**: Initialisiert die Levelübersicht und das Laden von Leveln.
+    - **`game.js`**: Steuert die Spiellogik und die Benutzerinteraktionen im Spiel.
+  - **`styles/`**: CSS-Dateien für das Styling der Anwendung.
+    - **`style.css`**: Globale Stile für die Anwendung.
+    - **`home.css`**: Stile für die Startseite.
+    - **`game.css`**: Stile für die Spielseite.
+  - **`GameAPI.js`**: Hauptklasse zur Verwaltung des Spiels und der Benutzerinteraktionen.
+  - **`userFunctions.js`**: Benutzerdefinierte Funktionen, die im Spiel verwendet werden können.
+
+- **`public/`**: Statische Dateien, die direkt bereitgestellt werden.
+  - **`levels/`**: JSON-Dateien mit den Definitionen der verschiedenen Spiellevel.
+  - **`index.html`**: Startseite des Projekts.
+  - **`game.html`**: Seite, auf der das Spielfeld und der Code-Editor angezeigt werden.
+
+### Wichtige Dateien
+
+- **`vite.config.js`**: Konfigurationsdatei für Vite, die den Entwicklungs- und Build-Prozess steuert.
+- **`package.json`**: Enthält Metadaten über das Projekt sowie die Abhängigkeiten und Skripte.
+- **`.gitignore`**: Definiert Dateien und Verzeichnisse, die nicht in das Git-Repository aufgenommen werden sollen.
+- **`README.md`**: Dokumentation des Projekts (diese Datei).
+
+### Level-Dateien
+
+Die Level-Dateien befinden sich im Verzeichnis **`public/levels/`** und sind im JSON-Format. Sie enthalten:
+
+- **`titel`**: Der Name des Levels.
+- **`player`**: Startposition und Richtung des Spielers.
+- **`treasure`**: Position des Schatzes.
+- **`map`**: 2D-Array, das die Karte definiert (0 = Wasser, 1 = Land).
+- **`instructions`**: HTML-Inhalt mit Anweisungen für das Level.
+
+Diese Struktur sorgt dafür, dass der Code modular und leicht verständlich bleibt, während er gleichzeitig die Flexibilität bietet, neue Features hinzuzufügen.
 
 ## 🛠️ Technologien
 
-- [Vite](https://vitejs.dev/) für schnelle Entwicklung
-- [Monaco Editor](https://microsoft.github.io/monaco-editor/) für den integrierten Code-Editor
-- [Acorn](https://github.com/acornjs/acorn) für die Code-Analyse
+- [Vite](https://vitejs.dev/) für schnelle Entwicklung.
+- [Monaco Editor](https://microsoft.github.io/monaco-editor/) für den integrierten Code-Editor.
+- [Acorn](https://github.com/acornjs/acorn) für die Code-Analyse.
 
 ## 📜 Lizenz
 
 Dieses Projekt steht unter der MIT-Lizenz.
-
-## 📖 Anleitung
-
-### Verfügbare Funktionen
-
-- **Englische Funktionsnamen**:
-
-  - `move()`: Bewegt den Spieler einen Schritt in die aktuelle Richtung.
-  - `turnLeft()`: Dreht den Spieler um 90° nach links.
-  - `noWater()`: Prüft, ob vor dem Spieler Land (kein Wasser) ist.
-  - `setMarker()`: Setzt eine Markierung an der aktuellen Position des Spielers.
-  - `onTreasure()`: Prüft, ob der Spieler auf dem Schatz steht.
-
-- **Deutsche Funktionsnamen**:
-  - `vor()`: Bewegt den Spieler einen Schritt in die aktuelle Richtung.
-  - `links()`: Dreht den Spieler um 90° nach links.
-  - `vorneFrei()`: Prüft, ob vor dem Spieler Land (kein Wasser) ist.
-  - `setzteMarkierung()`: Setzt eine Markierung an der aktuellen Position des Spielers.
-  - `aufSchatz()`: Prüft, ob der Spieler auf dem Schatz steht.
-
-### Level-Editor
-
-- **Spieler platzieren**: Wähle "Player" und klicke auf das Spielfeld.
-- **Land/Wasser setzen**: Wähle "Land" oder "Wasser" und klicke auf das Spielfeld.
-- **Schatz platzieren**: Wähle "Schatz" und klicke auf das Spielfeld.
 
 Viel Spaß beim Programmieren und Entdecken! 🏴‍☠️

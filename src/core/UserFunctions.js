@@ -119,3 +119,9 @@ export async function setzteMarkierung() {
 export async function aufSchatz() {
   return onTreasure();
 }
+
+export async function Log(logText) {
+  if (!gameController)
+    throw new Error("GameController ist nicht initialisiert.");
+  Utils.logAction(String(logText), "lila");
+}

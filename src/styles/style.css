@@ -7,6 +7,11 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -130,6 +135,10 @@ code {
 
 .orange {
   color: orange;
+}
+
+.lila {
+  color: #bc00d5;
 }
 
 /* Styling für die Funktion-Liste */

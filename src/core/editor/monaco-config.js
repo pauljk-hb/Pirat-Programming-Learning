@@ -49,7 +49,7 @@ export function configureCustomJsHighlighting() {
 
         // Funktionen (z. B. move(), setMarker())
         [
-          /\b(move|setMarker|turnLeft|noWater|onTreasure|vor|links|vorneFrei|setzteMarkierung|aufSchatz)\b(?=\()/,
+          /\b(move|setMarker|turnLeft|noWater|onTreasure|vor|links|vorneFrei|setzteMarkierung|aufSchatz|Log)\b(?=\()/,
           "function",
         ],
 
@@ -209,6 +209,14 @@ export function registerCustomCompletionProvider() {
           kind: monaco.languages.CompletionItemKind.Function,
           documentation: "Prüft, ob der Spieler auf dem Schatz steht.",
           insertText: "aufSchatz()",
+        },
+        {
+          label: "Log()",
+          kind: monaco.languages.CompletionItemKind.Function,
+          documentation: "Loggt eine Nachricht in der Konsole.",
+          insertText: "Log(${1:message})",
+          insertTextRules:
+            monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
         },
         {
           label: "true",

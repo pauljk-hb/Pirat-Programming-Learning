@@ -1,0 +1,31 @@
+{
+  "titel": "Level 3: Wiederholungen mit for-Schleifen",
+  "player": {
+    "x": 1,
+    "y": 1,
+    "direction": "right",
+    "userX": 1,
+    "userY": 1,
+    "userDirection": "right"
+  },
+  "treasure": {
+    "x": 8,
+    "y": 1
+  },
+  "map": [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ],
+  "code": "",
+  "instructions": "<h3>Willkommen zu Level 3!</h3>\n<p>In diesem Level lernst du, wie du Befehle mit einer <strong>for</strong>-Schleife wiederholen kannst. Schleifen helfen dir, denselben Befehl mehrmals auszuführen, ohne ihn jedes Mal einzeln zu schreiben.</p>\n<p>Hier sind die wichtigsten Befehle, die du verwenden kannst:</p>\n<ul>\n  <li><strong>vor()</strong>: Bewegt den Spieler ein Feld nach vorne.</li>\n  <li><strong>links()</strong>: Dreht den Spieler um 90° nach links.</li>\n</ul>\n<p>Deine Aufgabe ist es, den Spieler mithilfe einer <strong>for</strong>-Schleife zum Schatz zu bringen. Der Spieler muss sich 9 Felder nach vorne bewegen, um den Schatz zu erreichen.</p>\n<h4>Wie schreibe ich eine for-Schleife?</h4>\n<p>Hier ist ein Beispiel:</p>\n<pre><code>for (let i = 0; i < 5; i++) {\n  vor();\n}</code></pre>\n<p>In diesem Beispiel wird der Befehl <strong>vor()</strong> fünfmal ausgeführt.</p>\n<p>Verwende eine <strong>for</strong>-Schleife, um den Spieler zum Schatz zu bringen!</p>\n<p>Im <strong>Terminal</strong> unten links kann übersichtlich nachvolzogen werden, welche Befehle in welcher Reihenfolge ausgeführt wurden. Das ist besonders bei Schleifen sehr nützlich.</p>\n<h4>Wie schreibe und führe ich Code aus?</h4>\n<ol>\n  <li>Öffne den Code-Editor und schreibe die Befehle, die der Spieler ausführen soll. Zum Beispiel:</li>\n  <pre><code>for (let i = 0; i < 5; i++) {\n  vor();\n}</code></pre>\n  <li>Klicke auf den \"Code ausführen\"-Button, um den Code auszuführen. Der Spieler wird die Befehle Schritt für Schritt ausführen.</li>\n  <li>Wenn der Spieler nicht den Schatz erreicht, überprüfe deinen Code und passe ihn an. Programmieren bedeutet oft, Dinge auszuprobieren und zu verbessern!</li>\n</ol>\n<p>Viel Erfolg!</p>",
+  "preview": ""
+}

@@ -1,0 +1,30 @@
+{
+  "titel": "Level 4: Entscheidungen treffen mit if-else",
+  "player": {
+    "x": 1,
+    "y": 8,
+    "direction": "up",
+    "userX": 1,
+    "userY": 8,
+    "userDirection": "up"
+  },
+  "treasure": {
+    "x": 6,
+    "y": 6
+  },
+  "map": [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 0, 0, 0, 0, 0, 0, 1, 0],
+    [0, 1, 0, 1, 1, 1, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0, 0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0, 0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0, 0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 1, 0],
+    [0, 1, 0, 1, 1, 1, 1, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ],
+  "code": "for (let i = 0; i < 43; i++) {\n\n}",
+  "instructions": "<h3>Willkommen zu Level 4!</h3>\n<p>In diesem Level lernst du, wie du Entscheidungen mit <strong>if</strong>- und <strong>if-else</strong>-Blöcken triffst. Diese helfen dir, den Programmfluss zu steuern und auf verschiedene Situationen zu reagieren.</p>\n<h4>Was ist ein if-Block?</h4>\n<p>Ein <strong>if</strong>-Block wird verwendet, um eine Bedingung zu prüfen. Wenn die Bedingung <strong>wahr</strong> ist, wird der Code im <strong>if</strong>-Block ausgeführt. Wenn die Bedingung <strong>nicht wahr</strong> (also falsch) ist, wird der Code übersprungen.</p>\n<p>Hier ist ein Beispiel:</p>\n<pre><code>if (vorneFrei()) {\n  vor();\n}</code></pre>\n<p>In diesem Beispiel prüft der Code, ob der Weg vor dem Spieler frei ist (<strong>vorneFrei()</strong>). Wenn das der Fall ist, bewegt sich der Spieler ein Feld nach vorne (<strong>vor()</strong>).</p>\n<h4>Was passiert, wenn die Bedingung falsch ist?</h4>\n<p>Wenn die Bedingung falsch ist, kannst du einen <strong>else</strong>-Block hinzufügen, um anzugeben, was stattdessen passieren soll. Der <strong>else</strong>-Block wird ausgeführt, wenn die Bedingung im <strong>if</strong>-Block nicht erfüllt ist.</p>\n<p>Hier ist ein Beispiel:</p>\n<pre><code>if (vorneFrei()) {\n  vor();\n} else {\n  rechts();\n}</code></pre>\n<p>In diesem Beispiel prüft der Code, ob der Weg vor dem Spieler frei ist. Wenn ja, bewegt sich der Spieler nach vorne. Wenn nicht, dreht sich der Spieler nach rechts.</p>\n<h4>Wie kann ich Bedingungen umkehren?</h4>\n<p>Manchmal möchtest du prüfen, ob eine Bedingung <strong>nicht</strong> wahr ist. Dafür kannst du das <strong>! (nicht)</strong>-Symbol verwenden. Zum Beispiel:</p>\n<pre><code>if (!vorneFrei()) {\n  rechts();\n}</code></pre>\n<p>In diesem Beispiel prüft der Code, ob der Weg vor dem Spieler <strong>nicht frei</strong> ist. Wenn das der Fall ist, dreht sich der Spieler nach rechts.</p>\n<h4>Wie schreibe ich eine if-else-Struktur?</h4>\n<p>Hier ist ein vollständiges Beispiel:</p>\n<pre><code>if (vorneFrei()) {\n  vor();\n} else {\n  rechts();\n}</code></pre>\n<p>Die <strong>for</strong>-Schleife ist bereits für dich vorbereitet. Du musst nur den <strong>if-else</strong>-Block ausfüllen!</p>\n<h4>Wie schreibe und führe ich Code aus?</h4>\n<ol>\n  <li>Öffne den Code-Editor und schreibe die Befehle, die der Spieler ausführen soll. Zum Beispiel:</li>\n  <pre><code>for (let i = 0; i < 10; i++) {\n  if (vorneFrei()) {\n    vor();\n  } else {\n    rechts();\n  }\n}</code></pre>\n  <li>Klicke auf den \"Code ausführen\"-Button, um den Code auszuführen. Der Spieler wird die Befehle Schritt für Schritt ausführen.</li>\n  <li>Wenn der Spieler nicht den Schatz erreicht, überprüfe deinen Code und passe ihn an. Programmieren bedeutet oft, Dinge auszuprobieren und zu verbessern!</li>\n</ol>\n<p>Viel Erfolg!</p>",
+  "preview": ""
+}
