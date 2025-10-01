@@ -1,4 +1,4 @@
-import { LevelLoader } from "../core/LevelLoader.js";
+import { LevelLoader } from "../Game/core/LevelLoader.js";
 
 const levelList = document.getElementById("levelList");
 
@@ -32,6 +32,7 @@ levelLoader.loadAllLevel(levelFiles).then((levels) => {
 
     const button = document.createElement("button");
     button.textContent = "Level starten";
+    button.className = "pixel-button";
     button.onclick = () => {
       window.location.href = `game.html?level=${levelFiles[index]}`;
     };

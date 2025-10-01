@@ -108,7 +108,7 @@ export class GameAPI {
   resetGame() {
     if (this.currentLevel) {
       Utils.removeFromStorage(`${this.currentLevel}-userCode`);
-      this.initGame(this.currentLevel);
+      this.gameController.reset();
       Utils.logAction("Spiel zurückgesetzt.", "orange");
     } else {
       Utils.logAction(

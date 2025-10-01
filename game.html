@@ -6,50 +6,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="module" src="/src/scripts/game.js"></script>
     <link rel="stylesheet" href="src/styles/style.css" />
+    <link rel="stylesheet" href="src/styles/game.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
     <title>Game</title>
   </head>
   <body class="game-body">
     <div class="control-panel">
-      <label for="speedControl">Geschwindigkeit:</label>
-      <input id="speedControl" type="range" value="5" min="1" max="10" />
-      <div>
+      <label class="slider-label" for="speedControl">Geschwindigkeit:</label>
+      <input
+        class="pirate-slider"
+        id="speedControl"
+        type="range"
+        value="5"
+        min="1"
+        max="10"
+      />
+      <div class="radio-group">
         <label for="level-design">Level Design:</label>
-        <label>
+        <label class="radio-button">
           <input type="radio" name="level-design" value="player" checked />
           PLayer
         </label>
-        <label>
+        <label class="radio-button">
           <input type="radio" name="level-design" value="land" />
           Land
         </label>
-        <label>
+        <label class="radio-button">
           <input type="radio" name="level-design" value="water" />
           Wasser
         </label>
-        <label>
+        <label class="radio-button">
           <input type="radio" name="level-design" value="treasure" />
           Schatz
         </label>
 
-        <button id="rotate-btn">
+        <button class="pixel-button" id="rotate-btn">
           <i data-feather="corner-right-down" class="feather-icon"></i> Spieler
           drehen
         </button>
       </div>
 
-      <button id="saveLevel" style="margin-left: 2rem">
-        <i data-feather="save" class="feather-icon"></i>Level speichern
+      <button class="pixel-button" id="saveLevel" style="margin-left: 2rem">
+        <i data-feather="save" class="feather-icon"></i>Speichern
       </button>
-      <button id="loadLevel" style="margin-right: 4rem">
-        <i data-feather="upload" class="feather-icon"></i>Level laden
+      <button class="pixel-button" id="loadLevel" style="margin-right: 4rem">
+        <i data-feather="upload" class="feather-icon"></i>Laden
       </button>
 
       <!-- <button id="stopCode">Code stoppen</button> -->
-      <button id="resetGame">
+      <button class="pixel-button" id="resetGame">
         <i data-feather="rotate-ccw" class="feather-icon"></i>Reset Level
       </button>
       <a href="/">
-        <button><i data-feather="home" class="feather-icon"></i>Home</button>
+        <button class="pixel-button">
+          <i data-feather="home" class="feather-icon"></i>Home
+        </button>
       </a>
     </div>
 
@@ -58,11 +72,11 @@
     </div>
     <div class="editor-wraper">
       <div id="editor" style="height: 100%"></div>
-      <button id="runCode">
+      <button id="runCode" class="pixel-button">
         <i data-feather="play" class="feather-icon"></i> Code ausführen
       </button>
     </div>
-    <div class="level-instructions" id="instructions">
+    <div class="level-instructions section-bk" id="instructions">
       <h3>Verfügbare Funktionen:</h3>
       <ul>
         <h4>Englische Funktionsnamen:</h4>
@@ -125,6 +139,6 @@
       </p>
     </div>
 
-    <div id="logOutput"></div>
+    <div id="logOutput" class="section-bk"></div>
   </body>
 </html>

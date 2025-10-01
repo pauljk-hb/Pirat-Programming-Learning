@@ -46,30 +46,46 @@ export class LevelLoader {
   }
 
   async loadLevelFromFile() {
-    try {
-      const fileInput = document.createElement("input");
-      fileInput.type = "file";
-      fileInput.accept = ".json";
-      fileInput.onchange = async (event) => {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-          try {
-            const levelData = JSON.parse(e.target.result);
-            console.log("Level-Daten geladen:", levelData);
-            return levelData;
-          } catch (error) {
-            console.error("Fehler beim Parsen der JSON-Datei:", error.message);
+    return new Promise((resolve, reject) => {
+      try {
+        const fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.accept = ".json";
+        fileInput.onchange = async (event) => {
+          const file = event.target.files[0];
+          if (!file) {
+            console.error("Keine Datei ausgewählt.");
+            resolve(null);
+            return;
           }
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            try {
+              const levelData = JSON.parse(e.target.result);
+              console.log("Level-Daten geladen:", levelData);
+              resolve(levelData);
+            } catch (error) {
+              console.error(
+                "Fehler beim Parsen der JSON-Datei:",
+                error.message
+              );
+              reject(error);
+            }
+          };
+          reader.onerror = () => {
+            reject(new Error("Fehler beim Lesen der Datei"));
+          };
+          reader.readAsText(file);
         };
-        reader.readAsText(file);
-      };
-      fileInput.click();
-    } catch (error) {
-      console.error("Fehler beim Laden der Datei:", error.message);
-      throw error;
-    }
+        fileInput.oncancel = () => {
+          resolve(null);
+        };
+        fileInput.click();
+      } catch (error) {
+        console.error("Fehler beim Laden der Datei:", error.message);
+        reject(error);
+      }
+    });
   }
 
   /**

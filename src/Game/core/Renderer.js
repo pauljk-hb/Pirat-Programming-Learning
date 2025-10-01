@@ -138,19 +138,25 @@ export class Renderer {
    * @param {object} treasure - Der Schatz mit `x` und `y`-Eigenschaften.
    */
   drawTreasure(treasure) {
+    const tileSize = 50;
     const dx = treasure.x * this.gridSize;
     const dy = treasure.y * this.gridSize;
 
-    this.ctx.fillStyle = "red";
-    this.ctx.beginPath();
-    this.ctx.arc(
-      dx + this.gridSize / 2,
-      dy + this.gridSize / 2,
-      this.gridSize / 4,
-      0,
-      Math.PI * 2
+    // Spalte 2 im Tileset (Spieler)
+    const sx = tileSize * 2;
+    const sy = 4 * tileSize;
+
+    this.ctx.drawImage(
+      this.tileSet,
+      sx,
+      sy,
+      tileSize,
+      tileSize,
+      dx,
+      dy,
+      this.gridSize,
+      this.gridSize
     );
-    this.ctx.fill();
   }
 
   /**

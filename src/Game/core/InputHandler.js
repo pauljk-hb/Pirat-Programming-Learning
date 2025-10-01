@@ -115,15 +115,31 @@ export class InputHandler {
    * Lädt ein Level aus einer JSON-Datei.
    */
   async loadLevel() {
-    const levelData = await this.levelLoader.loadLevelFromFile("level.json");
-    if (!levelData) {
-      console.error("Fehler beim Laden des Levels.");
-      return;
+    try {
+      const levelData = await this.levelLoader.loadLevelFromFile();
+      if (!levelData) {
+        console.warn("Kein Level ausgewählt oder Ladevorgang abgebrochen.");
+        return;
+      }
+
+      // Validierung der Level-Daten
+      if (!levelData.map || !levelData.player || !levelData.treasure) {
+        console.error("Unvollständige Level-Daten:", levelData);
+        alert("Die Level-Datei ist unvollständig oder beschädigt.");
+        return;
+      }
+
+      this.gameController.initGame(levelData, "custom-level");
+
+      // Code in den Editor laden, falls vorhanden
+      if (levelData.code && this.editor) {
+        this.editor.setValue(levelData.code);
+      }
+
+      console.log("Level erfolgreich geladen:", levelData);
+    } catch (error) {
+      console.error("Fehler beim Laden des Levels:", error);
+      alert("Fehler beim Laden der Level-Datei: " + error.message);
     }
-    this.gameController.initGame(
-      levelData.map,
-      levelData.player,
-      levelData.treasure
-    );
   }
 }

@@ -1,14 +1,14 @@
 import * as monaco from "monaco-editor";
-import { getMonacoWorkerUrl } from "../core/editor/monaco-worker-loader.js";
-import { GameAPI } from "../GameAPI";
+import { getMonacoWorkerUrl } from "../Game/core/editor/monaco-worker-loader.js";
+import { GameAPI } from "../Game/GameAPI";
 import {
   configureMonacoEnvironment,
   createMonacoEditor,
   registerCustomCompletionProvider,
-} from "../core/editor/monaco-config.js";
+} from "../Game/core/editor/monaco-config.js";
 import "monaco-editor/min/vs/editor/editor.main.css";
 import feather from "feather-icons";
-import { Utils } from "../core/Utils.js";
+import { Utils } from "../Game/core/Utils.js";
 
 const canvas = document.getElementById("gameCanvas");
 const logOutput = document.getElementById("logOutput");

@@ -47,6 +47,7 @@ export class GameController {
     };
     this.treasure = levelData.treasure;
     this.map = levelData.map;
+    this.code = levelData.code || "";
     this.crosses = [];
     if (Utils.loadFromStorage(`${levelName}-userCode`)) {
       this.editor.setValue(Utils.loadFromStorage(`${levelName}-userCode`));
@@ -67,6 +68,8 @@ export class GameController {
     this.player.y = this.player.userY;
     this.player.direction = this.player.userDirection;
     this.crosses = [];
+    this.editor.setValue(this.code || "");
+    console.log(this.code);
     this.renderer.drawGrid(this.map, this.player, this.treasure, this.crosses);
     console.log("After Reset", this.player);
   }
