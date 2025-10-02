@@ -120,7 +120,15 @@ export class GameAPI {
     }
   }
 
+  resetCode() {
+    this.editor.setValue(this.gameController.code || "");
+  }
+
   stopUserCode() {
     this.gameController.stopUserCode();
+  }
+
+  setHTMLinstructions(instructions) {
+    this.inputHandler.setHTMLinstructions(instructions);
   }
 }

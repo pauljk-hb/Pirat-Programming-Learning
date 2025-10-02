@@ -1,4 +1,5 @@
 import { dirname, resolve } from "node:path";
+import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 
@@ -10,6 +11,8 @@ export default defineConfig({
       input: {
         main: "index.html",
         game: "game.html",
+        levelEditor: "levelEditor.html",
+        test: "test.html",
       },
     },
   },

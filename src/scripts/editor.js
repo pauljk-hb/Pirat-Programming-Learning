@@ -1,5 +1,7 @@
-import * as monaco from "monaco-editor";
-import { getMonacoWorkerUrl } from "../Game/core/editor/monaco-worker-loader.js";
+import EasyMDE from "easymde";
+import "easymde/dist/easymde.min.css";
+import { marked } from "marked";
+
 import { GameAPI } from "../Game/GameAPI";
 import {
   configureMonacoEnvironment,
@@ -14,12 +16,6 @@ const canvas = document.getElementById("gameCanvas");
 const logOutput = document.getElementById("logOutput");
 const runButton = document.getElementById("runCode");
 const resetButton = document.getElementById("resetGame");
-const instructionParent = document.getElementById("instructions");
-
-const urlParams = new URLSearchParams(window.location.search);
-const levelFile = urlParams.get("level");
-const isCustomLevel = urlParams.get("custom") === "true";
-// const levelFile = "level2.json";
 
 configureMonacoEnvironment();
 const editor = createMonacoEditor("editor");
@@ -27,10 +23,7 @@ registerCustomCompletionProvider();
 
 const gameAPI = new GameAPI(canvas, editor, logOutput);
 
-const instruktions = await gameAPI.initGame(levelFile, isCustomLevel);
-if (instruktions && instruktions.length > 0) {
-  instructionParent.innerHTML = instruktions;
-}
+const instruktions = await gameAPI.initGame("level1.json");
 
 // Event-Listener für "Code ausführen"
 runButton.addEventListener("click", async () => {
@@ -50,3 +43,33 @@ editor.onDidChangeModelContent(() => {
 });
 
 feather.replace();
+
+console.log(document.getElementById("instructions-editor"));
+
+const easyMDE = new EasyMDE({
+  element: document.getElementById("instructions-editor"),
+  toolbar: [
+    "bold", // Fett
+    "italic", // Kursiv
+    "|", // Trennlinie
+    "heading-3", // Erstellt eine H3-Überschrift
+    "|",
+    "unordered-list", // Aufzählungspunkt
+    "ordered-list", // Nummerierte Liste
+    "|",
+    "link", // Link
+    "|",
+    "code", // Vorschau
+    "|",
+    "preview", // Vorschau umschalten
+  ],
+});
+
+easyMDE.codemirror.on("change", () => {
+  const currentInstructions = easyMDE.value();
+
+  //Markdown-Inhalt zu HTML umwandeln
+  const htmlInstructions = marked.parse(currentInstructions);
+
+  gameAPI.setHTMLinstructions(htmlInstructions);
+});

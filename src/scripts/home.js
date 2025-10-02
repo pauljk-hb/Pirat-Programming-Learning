@@ -1,4 +1,5 @@
 import { LevelLoader } from "../Game/core/LevelLoader.js";
+import feather from "feather-icons";
 
 const levelList = document.getElementById("levelList");
 const customLevelList = document.getElementById("customLevelList");
@@ -27,8 +28,8 @@ levelLoader.loadAllStandardLevel(levelFiles).then((levels) => {
       const img = document.createElement("img");
       img.src = level.preview; // Base64-Bild als Quelle setzen
       img.alt = `Vorschaubild für ${level.titel}`;
-      img.style.width = "100px"; // Größe des Vorschaubilds
-      img.style.height = "100px";
+      img.style.width = "70px"; // Größe des Vorschaubilds
+      img.style.height = "70px";
       innerDiv.appendChild(img);
     }
 
@@ -54,6 +55,7 @@ levelLoader.loadAllCustomLevel().then((levels) => {
     div.className = "level-item";
     const title = document.createElement("h3");
     title.textContent = level.fileName.replace(".json", "");
+    const innderDivBtn = document.createElement("div");
 
     if (level.preview) {
       const img = document.createElement("img");
@@ -72,8 +74,11 @@ levelLoader.loadAllCustomLevel().then((levels) => {
     };
 
     const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Level löschen";
     deleteButton.className = "pixel-button";
+    const i = document.createElement("i");
+    i.setAttribute("data-feather", "x");
+    i.className = "feather-icon";
+    deleteButton.prepend(i);
     deleteButton.onclick = () => {
       levelLoader.deleteCustomLevel(level.fileName).then(() => {
         window.location.reload();
@@ -81,11 +86,13 @@ levelLoader.loadAllCustomLevel().then((levels) => {
     };
 
     innerDiv.appendChild(title);
+    innderDivBtn.appendChild(button);
+    innderDivBtn.appendChild(deleteButton);
     div.appendChild(innerDiv);
-    div.appendChild(button);
-    div.appendChild(deleteButton);
+    div.appendChild(innderDivBtn);
     customLevelList.appendChild(div);
   });
+  feather.replace();
 });
 
 loadCustomLevelBtn.addEventListener("click", async () => {
@@ -93,3 +100,5 @@ loadCustomLevelBtn.addEventListener("click", async () => {
     window.location.reload();
   });
 });
+
+feather.replace();

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="/src/scripts/editor.js"></script>
+    <link rel="stylesheet" href="src/styles/style.css" />
+    <link rel="stylesheet" href="src/styles/game.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <title>Game</title>
+  </head>
+  <body class="game-body">
+    <div class="control-panel">
+      <input id="levelTitle" type="input" placeholder="Level Titel" />
+      <div class="radio-group">
+        <label for="level-design">Level Design:</label>
+        <label class="radio-button">
+          <input type="radio" name="level-design" value="player" checked />
+          PLayer
+        </label>
+        <label class="radio-button">
+          <input type="radio" name="level-design" value="land" />
+          Land
+        </label>
+        <label class="radio-button">
+          <input type="radio" name="level-design" value="water" />
+          Wasser
+        </label>
+        <label class="radio-button">
+          <input type="radio" name="level-design" value="treasure" />
+          Schatz
+        </label>
+
+        <button class="pixel-button" id="rotate-btn">
+          <i data-feather="corner-right-down" class="feather-icon"></i> Spieler
+          drehen
+        </button>
+      </div>
+
+      <button
+        class="pixel-button"
+        id="saveLevelFromEditor"
+        style="margin-left: 2rem"
+      >
+        <i data-feather="save" class="feather-icon"></i>Speichern
+      </button>
+      <button class="pixel-button" id="loadLevel" style="margin-right: 4rem">
+        <i data-feather="upload" class="feather-icon"></i>Laden
+      </button>
+
+      <!-- <button id="stopCode">Code stoppen</button> -->
+      <button class="pixel-button" id="resetGame">
+        <i data-feather="rotate-ccw" class="feather-icon"></i>Reset Level
+      </button>
+      <a href="/">
+        <button class="pixel-button">
+          <i data-feather="home" class="feather-icon"></i>Home
+        </button>
+      </a>
+    </div>
+
+    <div class="canvas-wraper">
+      <canvas id="gameCanvas" width="500" height="500"></canvas>
+    </div>
+    <div class="editor-wraper">
+      <div id="editor" style="height: 100%"></div>
+      <button id="runCode" class="pixel-button">
+        <i data-feather="play" class="feather-icon"></i> Code ausführen
+      </button>
+    </div>
+    <div class="level-instructions section-bk">
+      <label for="instructions-editor">Level-Anweisungen:</label>
+      <textarea id="instructions-editor"></textarea>
+    </div>
+
+    <div id="logOutput" class="section-bk"></div>
+  </body>
+</html>

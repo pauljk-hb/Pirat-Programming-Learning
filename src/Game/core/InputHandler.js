@@ -16,6 +16,7 @@ export class InputHandler {
     }
     this.canvas = canvas;
     this.editor = editor;
+    this.instructions = null;
     this.gameController = gameController;
     this.selectedTool = "player";
     this.levelLoader = new LevelLoader();
@@ -26,31 +27,59 @@ export class InputHandler {
    * Initialisiert die Event-Listener für Benutzerinteraktionen.
    */
   initEventListeners() {
-    this.canvas.addEventListener("click", (event) =>
-      this.handleCanvasClick(event)
-    );
+    // Canvas Event-Listener
+    if (this.canvas) {
+      this.canvas.addEventListener("click", (event) =>
+        this.handleCanvasClick(event)
+      );
+    }
 
+    // Radio-Buttons (Tool-Auswahl)
     const radioButtons = document.querySelectorAll(
       'input[name="level-design"]'
     );
-
     radioButtons.forEach((radioButton) => {
       radioButton.addEventListener("change", (event) => {
         this.selectedTool = event.target.value;
       });
     });
 
-    document.getElementById("rotate-btn").addEventListener("click", () => {
-      this.rotatePlayer();
-    });
+    // Button-Event-Listener mit if-Bedingung
+    const rotateBtn = document.getElementById("rotate-btn");
+    if (rotateBtn) {
+      rotateBtn.addEventListener("click", () => {
+        this.rotatePlayer();
+      });
+    }
 
-    document.getElementById("saveLevel").addEventListener("click", () => {
-      this.saveLevel();
-    });
+    const saveLevelBtn = document.getElementById("saveLevel");
+    if (saveLevelBtn) {
+      saveLevelBtn.addEventListener("click", () => {
+        this.saveLevel();
+      });
+    }
 
-    document.getElementById("loadLevel").addEventListener("click", async () => {
-      await this.loadLevel();
-    });
+    const saveLevelFromEditorBtn = document.getElementById(
+      "saveLevelFromEditor"
+    );
+    if (saveLevelFromEditorBtn) {
+      saveLevelFromEditorBtn.addEventListener("click", () => {
+        const titel = document.getElementById("levelTitle").value;
+        if (!titel || titel.trim() === "") {
+          alert("Bitte geben Sie einen Level-Titel ein.");
+          return;
+        }
+        const instructions = this.instructions;
+        this.saveLevelFromEditor(titel, instructions);
+      });
+    }
+
+    const loadLevelBtn = document.getElementById("loadLevel");
+    if (loadLevelBtn) {
+      loadLevelBtn.addEventListener("click", async () => {
+        await this.loadLevel();
+      });
+    }
   }
 
   /**
@@ -111,6 +140,21 @@ export class InputHandler {
     console.log("Level gespeichert:", levelData);
   }
 
+  saveLevelFromEditor(titel, instructions) {
+    const levelData = {
+      player: this.gameController.getPlayer(),
+      treasure: this.gameController.getTreasure(),
+      map: this.gameController.getMap(),
+      code: this.editor.getValue(), // Benutzer-Code aus dem Editor
+      titel: titel,
+      instructions: instructions,
+      preview: this.canvas.toDataURL("image/png"),
+    };
+
+    this.levelLoader.saveLevel(levelData, `${titel}.json`);
+    console.log("Level gespeichert:", levelData);
+  }
+
   /**
    * Lädt ein Level aus einer JSON-Datei.
    */
@@ -141,5 +185,9 @@ export class InputHandler {
       console.error("Fehler beim Laden des Levels:", error);
       alert("Fehler beim Laden der Level-Datei: " + error.message);
     }
+  }
+
+  setHTMLinstructions(instructions) {
+    this.instructions = instructions;
   }
 }

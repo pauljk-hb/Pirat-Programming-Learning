@@ -9,10 +9,28 @@
     <title>Vite App</title>
   </head>
   <body class="home-body">
-    <h1>Pirat Programiern</h1>
     <div class="level-management">
+      <div>
+        <h1>Pirat Programiern</h1>
+
+        <div>
+          <!-- <button id="loadCustomLevel">Eigenes Level laden</button> -->
+          <button class="pixel-button" id="loadCustomLevel">
+            <i data-feather="upload" class="feather-icon"></i>
+          </button>
+          <!-- <button id="createCustomLevel">
+        <a href="/levelEditor.html">Eigenes Level erstellen</a>
+      </button> -->
+          <a href="/levelEditor.html">
+            <button class="pixel-button" id="createCustomLevel">
+              <i data-feather="edit" class="feather-icon"></i>
+            </button>
+          </a>
+        </div>
+      </div>
+
       <h3>Level Übersicht</h3>
-      <button id="loadCustomLevel">Eigenes Level laden</button>
+
       <div id="levelList">
         <!-- Dynamisch generierte Level-Links werden hier eingefügt -->
       </div>
