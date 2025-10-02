@@ -14,6 +14,7 @@ const canvas = document.getElementById("gameCanvas");
 const logOutput = document.getElementById("logOutput");
 const runButton = document.getElementById("runCode");
 const resetButton = document.getElementById("resetGame");
+const resetCodeButton = document.getElementById("resetCode");
 const instructionParent = document.getElementById("instructions");
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -40,6 +41,9 @@ runButton.addEventListener("click", async () => {
 // Event-Listener für "Spiel zurücksetzen"
 resetButton.addEventListener("click", () => {
   gameAPI.resetGame();
+});
+
+resetCodeButton.addEventListener("click", () => {
   gameAPI.resetCode();
 });
 

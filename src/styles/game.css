@@ -1,3 +1,22 @@
+/* Styling für Chrome, Edge, Safari und Opera */
+/* Die gesamte Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Der Track (der Pfad) */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Der Schieberegler (der Balken) */
+::-webkit-scrollbar-thumb {
+  background-color: var(--pirate-shadow); /* Dunkelbraune Farbe */
+  border-radius: 0px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
 .game-body {
   display: grid;
   grid-template-columns: 500px repeat(2, 1fr);
@@ -31,7 +50,6 @@
 /* Styling für die Level-Anweisungen (level.instructions) */
 .level-instructions {
   padding: 1.5rem;
-  border: 1px solid #ccc;
   font-family: Arial, Helvetica, sans-serif;
   color: #333;
   line-height: 1.6;
@@ -40,7 +58,8 @@
 
 .level-instructions h3 {
   font-size: 1.8rem;
-  color: #007bff;
+  color: var(--pirate-shadow);
+  font-weight: 900;
   margin-bottom: 1rem;
 }
 
@@ -94,7 +113,7 @@
 
 .level-instructions h4 {
   font-size: 1.4rem;
-  color: #333;
+  color: var(--pirate-shadow);
   margin-top: 1rem;
   margin-bottom: 0.5rem;
 }

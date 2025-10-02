@@ -1,11 +1,12 @@
 @import "./home.css";
+@import url("https://fonts.googleapis.com/css2?family=Jersey+15&display=swap");
 
 :root {
   --pirate-brown: #7b3f00;
   --pirate-beige: #f4e2c6;
   --pirate-gold: #fdd76e;
   --pirate-shadow: #3f1f00;
-  --pirate-font: "Press Start 2P", cursive;
+  --pirate-font: "Jersey 15", sans-serif;
   --ui-border: 4px solid var(--pirate-shadow);
 }
 
@@ -32,7 +33,16 @@ body {
 }
 
 .section-bk {
-  background-color: var(--pirate-beige);
+  background-image: url("/public/paper_texture.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border: 0;
+  box-shadow: 0px 5px #492514, /* Oben */ 0px -5px #492514,
+    /* Unten */ 5px 0px #492514, /* Rechts */ -5px 0px #492514,
+    /* Links */ 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038,
+    inset 0px 5px #ffffff36;
 }
 
 .editor-wraper {
@@ -47,7 +57,7 @@ body {
 
 .slider-label {
   font-family: var(--pirate-font);
-  font-size: 12px;
+  font-size: 20px;
   margin-bottom: 4px;
   color: var(--pirate-brown);
 }
@@ -109,7 +119,7 @@ body {
 
 .radio-group label {
   font-family: var(--pirate-font);
-  font-size: 11px;
+  font-size: 20px;
   color: var(--pirate-brown);
   display: inline-block;
   cursor: pointer;
@@ -143,6 +153,28 @@ body {
   position: relative;
 }
 
+#levelTitle {
+  font-size: 23px;
+  padding: 4px 6px;
+  box-sizing: border-box;
+
+  border: 2px solid #6b4e2e;
+  background-color: #ffe1a3;
+
+  box-shadow: inset 2px 2px #d1b07a, inset -2px -2px #ffffff60;
+
+  border-radius: 3px;
+
+  font-family: "Jersey 15", sans-serif;
+  color: #492514;
+}
+
+#levelTitle:focus {
+  outline: none; /* Entfernt den Standard-Fokus-Rahmen */
+  box-shadow: 0 0 0 2px #ffe1a3, inset 2px 2px #d1b07a,
+    inset -2px -2px #ffffff60;
+}
+
 .radio-button input[type="radio"]:checked::before {
   content: "";
   display: block;
@@ -156,14 +188,26 @@ body {
 .control-panel {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
   padding: 1rem;
-  border: 1px solid #ccc;
-  background-color: var(--pirate-beige);
+  /* background-color: var(--pirate-beige); */
+  background-image: url("/public/paper_texture.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 0;
+  box-shadow: 0px 5px #492514, /* Oben */ 0px -5px #492514,
+    /* Unten */ 5px 0px #492514, /* Rechts */ -5px 0px #492514,
+    /* Links */ 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038,
+    inset 0px 5px #ffffff36;
+}
+
+.EasyMDEContainer {
+  background-color: white;
 }
 
 #logOutput {
-  border: 1px solid #ccc;
   padding: 10px;
   overflow-y: auto;
   font-weight: 700;

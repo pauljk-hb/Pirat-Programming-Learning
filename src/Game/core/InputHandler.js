@@ -28,7 +28,9 @@ export class InputHandler {
    */
   initEventListeners() {
     // Canvas Event-Listener
-    if (this.canvas) {
+    const currentPage = window.location.pathname;
+    console.log(`Current page: ${currentPage}`);
+    if (this.canvas && currentPage === "/levelEditor.html") {
       this.canvas.addEventListener("click", (event) =>
         this.handleCanvasClick(event)
       );
@@ -107,6 +109,8 @@ export class InputHandler {
       const treasure = this.gameController.getTreasure();
       treasure.x = x;
       treasure.y = y;
+    } else if (this.selectedTool === "cross") {
+      this.gameController.addCross(x, y);
     }
 
     this.gameController.update();

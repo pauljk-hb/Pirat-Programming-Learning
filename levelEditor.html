@@ -15,52 +15,62 @@
   </head>
   <body class="game-body">
     <div class="control-panel">
-      <input id="levelTitle" type="input" placeholder="Level Titel" />
-      <div class="radio-group">
-        <label for="level-design">Level Design:</label>
-        <label class="radio-button">
-          <input type="radio" name="level-design" value="player" checked />
-          PLayer
-        </label>
-        <label class="radio-button">
-          <input type="radio" name="level-design" value="land" />
-          Land
-        </label>
-        <label class="radio-button">
-          <input type="radio" name="level-design" value="water" />
-          Wasser
-        </label>
-        <label class="radio-button">
-          <input type="radio" name="level-design" value="treasure" />
-          Schatz
-        </label>
+      <div>
+        <input id="levelTitle" type="input" placeholder="Level Titel" />
+      </div>
+      <div>
+        <div class="radio-group">
+          <label for="level-design">Level Design:</label>
+          <label class="radio-button">
+            <input type="radio" name="level-design" value="player" checked />
+            PLayer
+          </label>
+          <label class="radio-button">
+            <input type="radio" name="level-design" value="land" />
+            Land
+          </label>
+          <label class="radio-button">
+            <input type="radio" name="level-design" value="water" />
+            Wasser
+          </label>
+          <label class="radio-button">
+            <input type="radio" name="level-design" value="treasure" />
+            Schatz
+          </label>
+          <label class="radio-button">
+            <input type="radio" name="level-design" value="cross" />
+            Kreuz
+          </label>
 
-        <button class="pixel-button" id="rotate-btn">
-          <i data-feather="corner-right-down" class="feather-icon"></i> Spieler
-          drehen
-        </button>
+          <button class="pixel-button" id="rotate-btn">
+            <i data-feather="corner-right-down" class="feather-icon"></i>
+            Spieler drehen
+          </button>
+        </div>
       </div>
 
-      <button
-        class="pixel-button"
-        id="saveLevelFromEditor"
-        style="margin-left: 2rem"
-      >
-        <i data-feather="save" class="feather-icon"></i>Speichern
-      </button>
-      <button class="pixel-button" id="loadLevel" style="margin-right: 4rem">
-        <i data-feather="upload" class="feather-icon"></i>Laden
-      </button>
-
-      <!-- <button id="stopCode">Code stoppen</button> -->
-      <button class="pixel-button" id="resetGame">
-        <i data-feather="rotate-ccw" class="feather-icon"></i>Reset Level
-      </button>
-      <a href="/">
-        <button class="pixel-button">
-          <i data-feather="home" class="feather-icon"></i>Home
+      <div>
+        <button
+          class="pixel-button"
+          id="saveLevelFromEditor"
+          style="margin-left: 2rem"
+        >
+          <i data-feather="save" class="feather-icon"></i>Speichern
         </button>
-      </a>
+        <button class="pixel-button" id="loadLevel" style="margin-right: 4rem">
+          <i data-feather="upload" class="feather-icon"></i>Laden
+        </button>
+
+        <!-- <button id="stopCode">Code stoppen</button> -->
+        <button class="pixel-button" id="resetGame">
+          <i data-feather="rotate-ccw" class="feather-icon"></i>Reset Level
+        </button>
+        <a href="/">
+          <button class="pixel-button">
+            <i data-feather="home" class="feather-icon"></i>Home
+          </button>
+        </a>
+      </div>
     </div>
 
     <div class="canvas-wraper">
