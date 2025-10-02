@@ -57,9 +57,11 @@ export class GameAPI {
    * Initialisiert das Spiel mit einem bestimmten Level.
    * @param {string} levelFile - Der Name der Level-Datei (z. B. "level1.json").
    */
-  async initGame(levelFile) {
+  async initGame(levelFile, isCustom = false) {
     try {
-      const levelData = await this.levelLoader.loadLevel(levelFile);
+      const levelData = isCustom
+        ? await this.levelLoader.loadCustomLevel(levelFile)
+        : await this.levelLoader.loadStandartLevel(levelFile);
       this.currentLevel = levelFile;
       this.gameController.initGame(levelData, levelFile);
       Utils.logAction(`Level "${levelFile}" erfolgreich geladen.`, "green");

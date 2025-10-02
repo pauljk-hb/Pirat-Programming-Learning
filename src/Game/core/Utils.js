@@ -130,6 +130,17 @@ export class Utils {
   }
 
   /**
+   * Löscht ein Objekt aus dem Local Storage.
+   * @param {string} key - Der Schlüssel, unter dem das Objekt gespeichert ist.
+   */
+  static deleteObjectFromStorage(key) {
+    const storedData = localStorage.getItem(key);
+    if (storedData) {
+      localStorage.removeItem(key);
+    }
+  }
+
+  /**
    * Löscht den gesamten Local Storage.
    */
   static clearStorage() {

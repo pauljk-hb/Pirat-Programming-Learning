@@ -14,10 +14,32 @@ export class Renderer {
     this.tileSet = new Image();
     this.tileSet.src = "tilemap.png";
     this.crosses = [];
+    this.isReady = false;
 
-    this.tileSet.onload = () => {
-      console.log("Tileset geladen");
-    };
+    // Promise für das Laden des Tilesets
+    this.tilesetLoaded = new Promise((resolve, reject) => {
+      this.tileSet.onload = () => {
+        console.log("Tileset geladen");
+        this.isReady = true;
+        resolve();
+      };
+
+      this.tileSet.onerror = (error) => {
+        console.error("Fehler beim Laden des Tilesets:", error);
+        reject(error);
+      };
+    });
+  }
+
+  /**
+   * Wartet bis das Tileset geladen ist
+   * @returns {Promise} Promise das erfüllt wird wenn das Tileset bereit ist
+   */
+  async waitForTileset() {
+    if (this.isReady) {
+      return Promise.resolve();
+    }
+    return this.tilesetLoaded;
   }
 
   /**
@@ -27,7 +49,9 @@ export class Renderer {
    * @param {object} treasure - Der Schatz mit `x` und `y`-Eigenschaften.
    * @param {Array<{x: number, y: number}>} crosses - Liste der Kreuze mit `x` und `y`-Koordinaten.
    */
-  drawGrid(map, player, treasure, crosses) {
+  async drawGrid(map, player, treasure, crosses) {
+    await this.waitForTileset();
+
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Zeichne die Karte

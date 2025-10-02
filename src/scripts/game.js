@@ -18,6 +18,7 @@ const instructionParent = document.getElementById("instructions");
 
 const urlParams = new URLSearchParams(window.location.search);
 const levelFile = urlParams.get("level");
+const isCustomLevel = urlParams.get("custom") === "true";
 // const levelFile = "level2.json";
 
 configureMonacoEnvironment();
@@ -26,7 +27,7 @@ registerCustomCompletionProvider();
 
 const gameAPI = new GameAPI(canvas, editor, logOutput);
 
-const instruktions = await gameAPI.initGame(levelFile);
+const instruktions = await gameAPI.initGame(levelFile, isCustomLevel);
 if (instruktions && instruktions.length > 0) {
   instructionParent.innerHTML = instruktions;
 }

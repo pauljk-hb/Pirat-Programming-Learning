@@ -37,6 +37,7 @@ export class GameController {
    * @param {string} levelName - Der Name des Levels.
    */
   initGame(levelData, levelName) {
+    console.log("Level Data:", levelData);
     this.player = {
       x: levelData.player.x,
       y: levelData.player.y,
@@ -68,7 +69,6 @@ export class GameController {
     this.player.y = this.player.userY;
     this.player.direction = this.player.userDirection;
     this.crosses = [];
-    this.editor.setValue(this.code || "");
     console.log(this.code);
     this.renderer.drawGrid(this.map, this.player, this.treasure, this.crosses);
     console.log("After Reset", this.player);
