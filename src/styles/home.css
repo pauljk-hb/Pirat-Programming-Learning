@@ -1,5 +1,10 @@
 .home-body {
-  padding: 3rem 17rem;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-image: url("/pirate-background-1.png");
   background-size: cover;
   background-position: center;
@@ -10,13 +15,63 @@
 .level-management {
   font-family: Arial, sans-serif;
   padding: 20px;
-  border: 1px solid #ccc;
-  background-color: var(--pirate-beige);
-  margin-top: 2rem;
+  background-image: url("/public/paper.png");
+  background-size: auto 100%; /* Ensures the width fits fully while maintaining aspect ratio */
+  background-position: center;
+  background-repeat: no-repeat;
+  max-width: 1320px;
+  width: 90%;
+  height: 89vh;
+  margin: 20px auto;
+  padding: 5vw 10vw;
+
+  @media (max-width: 768px) {
+    padding: 3vw 5vw;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2vw 3vw;
+  }
+}
+
+.level-management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.level-management-header h1 {
+  font-family: var(--pirate-font);
+  letter-spacing: 0.02em;
+  font-weight: 500;
+  font-size: 3rem;
+  color: var(--pirate-shadow);
+}
+
+.level-management-header div {
+  display: flex;
+  gap: 1rem;
+}
+
+.level-list {
+  height: 90%;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.level-list .subtitle {
+  font-family: var(--pirate-font);
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: var(--pirate-shadow);
 }
 
 /* Styling for the level list container */
-#levelList {
+#levelList,
+#customLevelList {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -35,9 +90,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.7rem 2rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #fff;
+  background-color: var(--pirate-beige);
+  box-shadow: 0px 3px #492514, 0px -3px #492514, 3px 0px #492514,
+    -3px 0px #492514, 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038,
+    inset 0px 5px #ffffff36;
+  cursor: pointer;
 }
 
 /* Styling for level titles */

@@ -108,6 +108,16 @@ export class GameController {
     return false;
   }
 
+  removeCross() {
+    const playerOnCrossIndex = this.crosses.findIndex(
+      (cross) => cross.x === this.player.x && cross.y === this.player.y
+    );
+
+    if (playerOnCrossIndex !== -1) {
+      this.crosses.splice(playerOnCrossIndex, 1);
+    }
+  }
+
   /**
    * Bewegt den Spieler in die aktuelle Richtung.
    */

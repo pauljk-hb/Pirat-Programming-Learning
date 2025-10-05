@@ -1,103 +1,294 @@
-# Pirat Programming
+# 🏴‍☠️ Pirat Programming
 
-Ein interaktives Projekt, das spielerisch Programmierlogik vermittelt. Entwickelt mit [Vite](https://vitejs.dev/) für schnelle und moderne Webentwicklung. Es basiert auf der Idee des Hamstersimulators.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/Node.js-16+-green.svg)](https://nodejs.org/)
+[![Vite](https://img.shields.io/badge/Built%20with-Vite-646CFF.svg)](https://vitejs.dev/)
+
+Ein interaktives Browser-basiertes Lernspiel, das spielerisch JavaScript-Programmierlogik vermittelt. Inspiriert vom bekannten Hamstersimulator, navigieren Spieler einen Piraten durch verschiedene Level und lernen dabei grundlegende Programmierkonzepte wie Schleifen, Bedingungen und Funktionen.
+
+## ✨ Features
+
+- 🎮 **Interaktives Gameplay**: Visueller Monaco-Editor mit Syntax-Highlighting
+- 🗺️ **Level-System**: 9 vorgefertigte Level mit steigendem Schwierigkeitsgrad
+- 🛠️ **Level-Editor**: Erstelle und teile deine eigenen Level
+- 🌐 **Mehrsprachig**: Deutsche und englische Funktionsnamen
+- 🎨 **Pixel-Art Stil**: Nostalgisches Gaming-Design
+- 📱 **Responsive**: Funktioniert auf Desktop und Tablet
+- 💾 **Import/Export**: Speichere und lade Level als JSON-Dateien
 
 ## 🚀 Schnellstart
+
+### Voraussetzungen
+
+- Node.js 16+
+- npm oder yarn
 
 ### Installation
 
 1. **Repository klonen**:
 
-```sh
-git clone <repository-url>
+```bash
+git clone https://github.com/pauljk-hb/Pirat-Programming-Learning.git
 cd pirat-programming
 ```
 
 2. **Abhängigkeiten installieren**:
 
-```sh
+```bash
 npm install
 ```
 
-3. **Entwicklung starten**:
+3. **Entwicklungsserver starten**:
 
-```sh
+```bash
 npm run dev
 ```
 
-4. **Produktion bauen**:
+4. **Für Produktion bauen**:
 
-```sh
+```bash
 npm run build
 ```
 
-## 🕹️ Benutzerbefehle
+Die Anwendung ist dann unter `http://localhost:5173` verfügbar.
 
-- **`move()` / `vor()`**: Bewegt den Spieler einen Schritt vorwärts.
-- **`turnLeft()` / `links()`**: Dreht den Spieler um 90° nach links.
-- **`noWater()` / `vorneFrei()`**: Prüft, ob vor dem Spieler Land ist.
-- **`setMarker()` / `setzteMarkierung()`**: Setzt eine Markierung.
-- **`onTreasure()` / `aufSchatz()`**: Prüft, ob der Spieler auf einem Schatz steht.
+## 🎯 Spielprinzip
 
-## 📂 Projektstruktur
+Der Spieler steuert einen Piraten auf einer Inselkarte mit JavaScript-Funktionen. Ziel ist es, den Schatz zu erreichen, während verschiedene Hindernisse umgangen werden müssen. Durch das Schreiben von Code lernen Spieler:
 
-Das Projekt ist in verschiedene Verzeichnisse und Dateien unterteilt, um die Entwicklung und Wartung zu erleichtern:
+- Grundlegende Programmierstrukturen
+- Schleifen (`while`, `for`)
+- Bedingte Anweisungen (`if`, `else`)
+- Funktionsdeklarationen
+- Algorithmisches Denken
 
-### Hauptverzeichnisse
+## 🕹️ Verfügbare Funktionen
 
-- **`src/`**: Hauptverzeichnis des Quellcodes.
+### Bewegung
 
-  - **`core/`**: Enthält die Kernlogik des Spiels.
-    - **`GameController.js`**: Verwalten des Spielzustands, der Spiellogik und der Interaktionen.
-    - **`Renderer.js`**: Zeichnet das Spielfeld, den Spieler, den Schatz und andere Elemente.
-    - **`LevelLoader.js`**: Laden und Speichern von Level-Daten.
-    - **`Utils.js`**: Hilfsfunktionen wie Logging, Verzögerungen und Speicheroperationen.
-    - **`InputHandler.js`**: Verarbeitet Benutzereingaben wie Klicks und Tastendrücke.
-    - **`editor/`**: Konfiguration und Integration des Monaco Editors.
-      - **`monaco-config.js`**: Anpassung des Editors (z. B. Syntax-Highlighting, Autovervollständigung).
-      - **`monaco-worker-loader.js`**: Lädt die Monaco-Worker für verschiedene Sprachen.
-  - **`scripts/`**: Enthält die Hauptskripte für die Startseite und das Spiel.
-    - **`home.js`**: Initialisiert die Levelübersicht und das Laden von Leveln.
-    - **`game.js`**: Steuert die Spiellogik und die Benutzerinteraktionen im Spiel.
-  - **`styles/`**: CSS-Dateien für das Styling der Anwendung.
-    - **`style.css`**: Globale Stile für die Anwendung.
-    - **`home.css`**: Stile für die Startseite.
-    - **`game.css`**: Stile für die Spielseite.
-  - **`GameAPI.js`**: Hauptklasse zur Verwaltung des Spiels und der Benutzerinteraktionen.
-  - **`userFunctions.js`**: Benutzerdefinierte Funktionen, die im Spiel verwendet werden können.
+- **`move()` / `vor()`**: Bewegt den Piraten einen Schritt vorwärts
+- **`turnLeft()` / `links()`**: Dreht den Piraten um 90° nach links
 
-- **`public/`**: Statische Dateien, die direkt bereitgestellt werden.
-  - **`levels/`**: JSON-Dateien mit den Definitionen der verschiedenen Spiellevel.
-  - **`index.html`**: Startseite des Projekts.
-  - **`game.html`**: Seite, auf der das Spielfeld und der Code-Editor angezeigt werden.
+### Sensoren
 
-### Wichtige Dateien
+- **`noWater()` / `vorneFrei()`**: Prüft, ob vor dem Piraten Land ist (`true`/`false`)
+- **`onTreasure()` / `aufSchatz()`**: Prüft, ob der Pirat auf dem Schatz steht (`true`/`false`)
+- **`onMarker()` / `aufMarkierung()`**: Prüft, ob der Pirat auf einer Markierung steht (`true`/`false`)
 
-- **`vite.config.js`**: Konfigurationsdatei für Vite, die den Entwicklungs- und Build-Prozess steuert.
-- **`package.json`**: Enthält Metadaten über das Projekt sowie die Abhängigkeiten und Skripte.
-- **`.gitignore`**: Definiert Dateien und Verzeichnisse, die nicht in das Git-Repository aufgenommen werden sollen.
-- **`README.md`**: Dokumentation des Projekts (diese Datei).
+### Aktionen
 
-### Level-Dateien
+- **`setMarker()` / `setzteMarkierung()`**: Setzt eine Markierung an der aktuellen Position
 
-Die Level-Dateien befinden sich im Verzeichnis **`public/levels/`** und sind im JSON-Format. Sie enthalten:
+### Beispiel-Code
 
-- **`titel`**: Der Name des Levels.
-- **`player`**: Startposition und Richtung des Spielers.
-- **`treasure`**: Position des Schatzes.
-- **`map`**: 2D-Array, das die Karte definiert (0 = Wasser, 1 = Land).
-- **`instructions`**: HTML-Inhalt mit Anweisungen für das Level.
+```javascript
+function findTreasure() {
+  while (!onTreasure()) {
+    if (noWater()) {
+      move();
+    } else {
+      turnLeft();
+    }
+  }
+}
 
-Diese Struktur sorgt dafür, dass der Code modular und leicht verständlich bleibt, während er gleichzeitig die Flexibilität bietet, neue Features hinzuzufügen.
+findTreasure();
+```
 
-## 🛠️ Technologien
+## 🏗️ Architektur
 
-- [Vite](https://vitejs.dev/) für schnelle Entwicklung.
-- [Monaco Editor](https://microsoft.github.io/monaco-editor/) für den integrierten Code-Editor.
-- [Acorn](https://github.com/acornjs/acorn) für die Code-Analyse.
+Das Projekt folgt einer modularen Architektur mit klarer Trennung von Verantwortlichkeiten:
 
-## 📜 Lizenz
+```
+src/
+├── Game/
+│   ├── GameAPI.js          # 🎮 Haupt-API für Spielsteuerung
+│   └── core/
+│       ├── GameController.js    # 🎯 Zentrale Spiellogik & Zustandsverwaltung
+│       ├── Renderer.js          # 🎨 Canvas-Rendering & Grafik
+│       ├── UserFunctions.js     # 🔧 Spieler-API Funktionen
+│       ├── CodeParser.js        # 📝 JavaScript Code-Analyse
+│       ├── LevelLoader.js       # 💾 Level Import/Export
+│       ├── InputHandler.js      # ⌨️ Eingabeverarbeitung
+│       ├── Utils.js             # 🛠️ Hilfsfunktionen
+│       └── editor/
+│           ├── monaco-config.js     # ⚙️ Monaco Editor Konfiguration
+│           └── monaco-worker-loader.js # 👷 Web Worker Setup
+├── scripts/
+│   ├── home.js             # 🏠 Startseiten-Controller
+│   ├── game.js             # 🎮 Spiel-Controller
+│   └── editor.js           # ✏️ Level-Editor Controller
+└── styles/                 # 🎨 CSS Styling
+```
 
-Dieses Projekt steht unter der MIT-Lizenz.
+### Datenfluss
 
-Viel Spaß beim Programmieren und Entdecken! 🏴‍☠️
+1. **GameAPI** initialisiert alle Kernmodule
+2. **GameController** verwaltet Spielzustand und -logik
+3. **UserFunctions** stellt die Programmier-API bereit
+4. **CodeParser** analysiert und führt Benutzercode aus
+5. **Renderer** aktualisiert die visuelle Darstellung
+
+## 📦 Wichtige Module
+
+### GameAPI.js
+
+Haupteinstiegspunkt der Anwendung. Koordiniert alle anderen Module und stellt die öffentliche API bereit.
+
+**Kernfunktionen:**
+
+- Initialisierung des Spiels
+- Code-Ausführung mit Fehlerbehandlung
+- Integration des Monaco Editors
+- Bereitstellung der Benutzer-API im globalen Scope
+
+### GameController.js
+
+Zentrale Spiellogik-Verwaltung mit Zustandskontrolle.
+
+**Kernfunktionen:**
+
+- `initGame(levelData)` - Level-Initialisierung
+- `movePlayer()` - Spielerbewegung mit Kollisionserkennung
+- `isValidPosition(x, y)` - Positionsvalidierung
+- `resetToUserPosition()` - Spieler-Reset bei Fehlern
+
+### UserFunctions.js
+
+Implementiert alle verfügbaren Spieler-Funktionen mit asynchroner Ausführung.
+
+**API-Funktionen:**
+
+- Bewegung: `move()`, `turnLeft()`
+- Sensoren: `noWater()`, `onTreasure()`, `onMarker()`
+- Aktionen: `setMarker()`
+- Deutsche Aliase: `vor()`, `links()`, `vorneFrei()`, etc.
+
+### CodeParser.js
+
+Sicherer JavaScript-Parser basierend auf Acorn AST.
+
+**Sicherheitsfeatures:**
+
+- Whitelist-basierte Funktionsvalidierung
+- Verhinderung schädlicher Konstrukte
+- Fehlerbehandlung und -meldung
+- Zeitlimit für Code-Ausführung
+
+### Level-Format
+
+```json
+{
+  "titel": "Level Name",
+  "player": {
+    "x": 1,
+    "y": 1,
+    "direction": "up"
+  },
+  "treasure": {
+    "x": 8,
+    "y": 8
+  },
+  "map": [[0,0,1,1], [0,1,1,1], ...],
+  "instructions": "<h3>Aufgabe...</h3>",
+  "initialCode": "// Starter code..."
+}
+```
+
+**Karten-Encoding:**
+
+- `0` = Wasser (nicht begehbar)
+- `1` = Land (begehbar)
+- `2` = Kreuz-Markierung
+
+## 🛠️ Technologie-Stack
+
+### Frontend
+
+- **[Vite](https://vitejs.dev/)** - Schneller Build-Tool und Dev-Server
+- **[Monaco Editor](https://microsoft.github.io/monaco-editor/)** - VS Code Editor im Browser
+- **HTML5 Canvas** - 2D-Rendering und Grafik
+- **ES6 Modules** - Moderne JavaScript-Module
+
+### Code-Verarbeitung
+
+- **[Acorn](https://github.com/acornjs/acorn)** - JavaScript-Parser (AST)
+- **[Acorn-Walk](https://github.com/acornjs/acorn-walk)** - AST-Traversierung
+- **[Astring](https://github.com/davidbonnet/astring)** - AST zu Code-Konvertierung
+
+### UI & Design
+
+- **[Feather Icons](https://feathericons.com/)** - Icon-Set
+- **[EasyMDE](https://github.com/Ionaru/easy-markdown-editor)** - Markdown-Editor
+- **CSS Grid & Flexbox** - Responsive Layout
+- **Custom CSS** - Pixel-Art Gaming-Design
+
+## 🤝 Beitragen
+
+Beiträge sind willkommen! Bitte beachte folgende Schritte:
+
+1. **Fork** das Repository
+2. **Branch** erstellen (`git checkout -b feature/AmazingFeature`)
+3. **Commit** deine Änderungen (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** zum Branch (`git push origin feature/AmazingFeature`)
+5. **Pull Request** öffnen
+
+### Entwicklung
+
+```bash
+# Entwicklungsserver mit Hot-Reload
+npm run dev
+
+# Build für Produktion
+npm run build
+
+# Preview der Production-Build
+npm run preview
+
+# Tests ausführen
+npm run test
+```
+
+### Code-Stil
+
+- ES6+ JavaScript
+- Modularer Aufbau
+- JSDoc-Kommentare für öffentliche APIs
+- Semantische HTML-Struktur
+
+## 📝 Level-Erstellung
+
+Erstelle eigene Level im JSON-Format:
+
+```json
+{
+  "titel": "Mein Level",
+  "player": { "x": 0, "y": 0, "direction": "up" },
+  "treasure": { "x": 4, "y": 4 },
+  "map": [
+    [1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 1],
+    [1, 0, 1, 0, 1],
+    [1, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1]
+  ],
+  "instructions": "<h3>Finde den Schatz!</h3><p>Verwende Schleifen...</p>",
+  "initialCode": "// Dein Code hier..."
+}
+```
+
+## 🐛 Bekannte Probleme
+
+- Monaco Editor kann bei langsamen Verbindungen verzögert laden
+- Canvas-Rendering kann auf älteren Browsern Performance-Probleme haben
+- Touch-Eingabe auf mobilen Geräten ist experimentell
+
+## � Lizenz
+
+Dieses Projekt steht unter der [MIT-Lizenz](LICENSE).
+
+---
+
+**Viel Spaß beim Programmieren lernen! 🏴‍☠️⚓**
+
+Erstellt mit ❤️ für angehende Programmierer\*innen

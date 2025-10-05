@@ -13,6 +13,10 @@ const levelFiles = [
   "level3.json",
   "level4.json",
   "level5.json",
+  "level6.json",
+  "level7.json",
+  "level8.json",
+  "level9.json",
 ];
 
 levelLoader.loadAllStandardLevel(levelFiles).then((levels) => {
@@ -61,8 +65,8 @@ levelLoader.loadAllCustomLevel().then((levels) => {
       const img = document.createElement("img");
       img.src = level.preview; // Base64-Bild als Quelle setzen
       img.alt = `Vorschaubild für ${level.fileName}`;
-      img.style.width = "100px"; // Größe des Vorschaubilds
-      img.style.height = "100px";
+      img.style.width = "70px"; // Größe des Vorschaubilds
+      img.style.height = "70px";
       innerDiv.appendChild(img);
     }
 
