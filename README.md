@@ -179,20 +179,36 @@ Sicherer JavaScript-Parser basierend auf Acorn AST.
 
 ```json
 {
-  "titel": "Level Name",
+  "titel": "Level 1: Befehlssequenz",
   "player": {
     "x": 1,
-    "y": 1,
-    "direction": "up"
+    "y": 8,
+    "direction": "up",
+    "userX": 1,
+    "userY": 8,
+    "userDirection": "up"
   },
   "treasure": {
-    "x": 8,
-    "y": 8
+    "x": 6,
+    "y": 2
   },
-  "map": [[0,0,1,1], [0,1,1,1], ...],
-  "instructions": "<h3>Aufgabe...</h3>",
-  "initialCode": "// Starter code..."
+  "map": [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ],
+  "code": "",
+  "instructions": "<h3>Level 1: Befehlssequenz</h3>\n<p>Willkommen, neuer Pirat! Deine erste Aufgabe ist es, den Schatz zu finden. Gib deinem Piraten schrittweise Anweisungen, um ihn zum Ziel zu steuern. </p>\n<p>Verwende die Befehle <code>vor()</code>, um dich zu bewegen, und <code>links()</code>, um die Richtung zu ändern.</p>\n<p>Die Schätze sind nicht weit entfernt. Du musst einfach nur die Befehle in der richtigen Reihenfolge aufschreiben.</p>\n<h4>Befehle:</h4>\n<ul>\n  <li><code>vor()</code>: Bewegt den Piraten ein Feld vorwärts.</li>\n  <li><code>links()</code>: Dreht den Piraten um 90° nach links.</li>\n</ul>\n<p>Viel Erfolg!</p>",
+  "preview": "data:image/png;base64,...."
 }
+
 ```
 
 **Karten-Encoding:**
