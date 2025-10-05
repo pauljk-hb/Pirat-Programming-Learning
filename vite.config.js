@@ -12,7 +12,6 @@ export default defineConfig({
         main: "index.html",
         game: "game.html",
         levelEditor: "levelEditor.html",
-        test: "test.html",
       },
     },
   },
