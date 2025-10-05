@@ -1,4 +1,4 @@
-![Pirat Programming](/pirat-programming-banner.webp)
+![Pirat Programming](github_banner.webp)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-16+-green.svg)](https://nodejs.org/)
@@ -290,5 +290,3 @@ Dieses Projekt steht unter der [MIT-Lizenz](LICENSE).
 ---
 
 **Viel Spaß beim Programmieren lernen! 🏴‍☠️⚓**
-
-Erstellt mit ❤️ für angehende Programmierer\*innen
