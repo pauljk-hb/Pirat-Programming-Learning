@@ -290,5 +290,3 @@ Dieses Projekt steht unter der [MIT-Lizenz](LICENSE).
 ---
 
 **Viel Spaß beim Programmieren lernen! 🏴‍☠️⚓**
-
-Erstellt mit ❤️ für angehende Programmierer\*innen
