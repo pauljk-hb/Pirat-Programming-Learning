@@ -22,35 +22,41 @@ const levelFile = urlParams.get("level");
 const isCustomLevel = urlParams.get("custom") === "true";
 // const levelFile = "level2.json";
 
-configureMonacoEnvironment();
-const editor = createMonacoEditor("editor");
-registerCustomCompletionProvider();
+// Initialisierung in async function wrappen
+async function initGame() {
+  configureMonacoEnvironment();
+  const editor = createMonacoEditor("editor");
+  registerCustomCompletionProvider();
 
-const gameAPI = new GameAPI(canvas, editor, logOutput);
+  const gameAPI = new GameAPI(canvas, editor, logOutput);
 
-const instruktions = await gameAPI.initGame(levelFile, isCustomLevel);
-if (instruktions && instruktions.length > 0) {
-  instructionParent.innerHTML = instruktions;
+  const instruktions = await gameAPI.initGame(levelFile, isCustomLevel);
+  if (instruktions && instruktions.length > 0) {
+    instructionParent.innerHTML = instruktions;
+  }
+
+  // Event-Listener für "Code ausführen"
+  runButton.addEventListener("click", async () => {
+    await gameAPI.runUserCode();
+  });
+
+  // Event-Listener für "Spiel zurücksetzen"
+  resetButton.addEventListener("click", () => {
+    gameAPI.resetGame();
+  });
+
+  resetCodeButton.addEventListener("click", () => {
+    gameAPI.resetCode();
+  });
+
+  // Speichert den aktuellen Code im Local Storage, wenn der Editor geändert wird
+  editor.onDidChangeModelContent(() => {
+    const currentCode = editor.getValue();
+    Utils.saveToStorage(`${levelFile}-userCode`, currentCode);
+  });
+
+  feather.replace();
 }
 
-// Event-Listener für "Code ausführen"
-runButton.addEventListener("click", async () => {
-  await gameAPI.runUserCode();
-});
-
-// Event-Listener für "Spiel zurücksetzen"
-resetButton.addEventListener("click", () => {
-  gameAPI.resetGame();
-});
-
-resetCodeButton.addEventListener("click", () => {
-  gameAPI.resetCode();
-});
-
-// Speichert den aktuellen Code im Local Storage, wenn der Editor geändert wird
-editor.onDidChangeModelContent(() => {
-  const currentCode = editor.getValue();
-  Utils.saveToStorage(`${levelFile}-userCode`, currentCode);
-});
-
-feather.replace();
+// Initialisierung starten
+initGame().catch(console.error);
